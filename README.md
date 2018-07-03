@@ -1,6 +1,6 @@
 # Udacity Project 3: Mobile Flash Cards
 
-This project is apart of Udacity’s [React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019). Important note to the user: I chose to do an iOS only mobile application. So if you do not have an iOS device you will have to use an iPhone simulator.
+This project is apart of Udacity’s [React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019). Important note to the user: I chose to do an iOS only mobile application. So if you do not have an iOS device you will have to use an iPhone simulator on your Mac.
 
 ## Installation
 
