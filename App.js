@@ -1,23 +1,72 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Text, View, Dimensions } from "react-native";
+import styled, { css } from "styled-components";
+
+const { width, height } = Dimensions.get("window");
+
+const HomeViewWrapper = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HeaderText = styled.Text`
+  font-size: 40px;
+  ${props =>
+    props.centered &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const SubheaderText = styled.Text`
+  font-size: 25px;
+  color: #e84118;
+`;
+
+const MutedText = styled.Text`
+  color: #a4b0be;
+  ${props =>
+    props.centered &&
+    css`
+      text-align: center;
+    `};
+  ${props =>
+    props.margin &&
+    css`
+      margin: ${props.margin};
+    `};
+`;
+
+const DeckViewWrapper = styled.View`
+  background-color: white;
+  border-radius: 3;
+  padding: 20px;
+  margin: 17px 10px 0px 10px;
+  shadow-radius: 3px;
+  shadow-opacity: 0.8;
+  shadow-color: rgba(0, 0, 0, 0.43);
+  shadow-offset: 0px 10px;
+  min-height: 175px;
+`;
+
+const DecksViewWrapper = styled.View`
+  width: ${width};
+`;
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <HomeViewWrapper>
+        <DecksViewWrapper>
+          <DeckViewWrapper>
+            <HeaderText centered>React</HeaderText>
+            <MutedText centered margin="20px">
+              0 Cards
+            </MutedText>
+          </DeckViewWrapper>
+        </DecksViewWrapper>
+      </HomeViewWrapper>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
