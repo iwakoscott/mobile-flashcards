@@ -18,7 +18,9 @@ This requires Xcode already installed on your laptop: [Xcode - Apple Developer](
 2. This will open up the Expo app in Xcode’s iPhone simulator. It may work out of the box, however, I ran into some issues getting the simulator to open up my Application in Expo. You may be presented with this error in the simulator:
 
 <p align=“center”>
-	![Step 1](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.21.26%20copy.png?alt=media&token=43baf2c6-21c3-43a4-82ce-4c10bf41b74a)
+<p align=“center”>
+<img src=“https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.21.26%20copy.png?alt=media&token=43baf2c6-21c3-43a4-82ce-4c10bf41b74a”/>
+<p>
 <p>
 
 If so, click on the “Go Back to Expo Home“ button (outlined in red in the screenshot) and then 
