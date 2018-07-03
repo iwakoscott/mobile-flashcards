@@ -17,22 +17,20 @@ This requires Xcode already installed on your laptop: [Xcode - Apple Developer](
 1. Within the root directory of `mobile-flashcards`, run `exp ios && exp start`
 2. This will open up the Expo app in Xcode’s iPhone simulator. It may work out of the box, however, I ran into some issues getting the simulator to open up my Application in Expo. You may be presented with this error in the simulator:
 
-
-![](READMD/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.21.26.png)
-
+![Step 1](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.21.26%20copy.png?alt=media&token=43baf2c6-21c3-43a4-82ce-4c10bf41b74a)
 
 If so, click on the “Go Back to Expo Home“ button (outlined in red in the screenshot) and then 
 click the “Projects” tab in the lower left corner (again outlined in red in the screenshot below)
 
-![](READMD/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.39.01.png)
+![Step 2](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.39.01.png?alt=media&token=fa9d7ac5-d340-4a8e-b6fb-9e421d16b7fa)
 
 Then, in the upper right corner click the “+” icon.
-![](READMD/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.42.40.png)
+![Step 3](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.42.40.png?alt=media&token=74a7da79-78b1-405a-8914-0819b4039997)
 
 And then you will be presented with the following dialogue:
-![](READMD/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.44.14.png)
+![Step 4](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.44.14.png?alt=media&token=c589d1db-7cbf-49dc-92ae-a2029acbef51)
 
 Go back to your terminal and copy the url located immediately underneath the QR code. Your URL may be a little bit different than the one listed in the screenshot below.
-![](READMD/Screen%20Shot%202018-07-02%20at%207.45.04%20PM.png)
+![Step 5](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Screen%20Shot%202018-07-02%20at%207.45.04%20PM.png?alt=media&token=fd65421c-7a75-4dff-9aa0-0a97e6d7a593)
 
 Paste the URL into the dialogue open in the simulator and then click “Open” and the application should start! ✨
