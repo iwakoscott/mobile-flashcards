@@ -7,6 +7,7 @@ import {
 } from "react-navigation";
 import Home from "./components/Home";
 import AddDeck from "./components/AddDeck";
+import DeckView from "./components/DeckView";
 
 const Tabs = createBottomTabNavigator({
   "All Decks": {
@@ -27,11 +28,26 @@ const Tabs = createBottomTabNavigator({
   }
 });
 
-// const MainNavigator = createStackNavigator({
-// });
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null
+    }
+  },
+  DeckView: {
+    screen: DeckView,
+    navigationOptions: {
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: "#b33939"
+      }
+    }
+  }
+});
 
 export default class App extends React.Component {
   render() {
-    return <Tabs />;
+    return <MainNavigator />;
   }
 }

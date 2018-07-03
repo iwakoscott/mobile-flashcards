@@ -22,10 +22,10 @@ const DeckBodyViewWrapper = styled.View`
   flex: 1;
 `;
 
-export function Deck({ title, cards }) {
+export function Deck({ title, cards, onPress }) {
   const numberOfCards = cards.length;
   return (
-    <TouchableOpacity onPress={() => alert(`${title} clicked!`)}>
+    <TouchableOpacity onPress={onPress}>
       <DeckViewWrapper>
         <HeaderText centered>{title}</HeaderText>
         <DeckBodyViewWrapper>
