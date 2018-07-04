@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
 import Card from "./Card";
 import shuffle from "shuffle-array";
+import { connect } from "react-redux";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,7 +29,7 @@ const AddCardViewWrapper = styled.View`
   align-items: center;
 `;
 
-export default class DeckView extends Component {
+class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params;
     return {
@@ -38,13 +39,18 @@ export default class DeckView extends Component {
 
   state = {
     shuffle: false,
-    cards: []
+    cards: [],
+    original: []
   };
 
   componentDidMount() {
-    const { cards } = this.props.navigation.state.params;
+    const { cards: cardIds } = this.props.navigation.state.params;
+    const { cardStore } = this.props;
+    const cardsData = cardIds.map(cardId => cardStore[cardId]);
+    // cards is an array of cardIds, we need to fetch these ids from the store
     this.setState({
-      cards
+      cards: cardsData,
+      original: cardsData
     });
   }
 
@@ -53,17 +59,15 @@ export default class DeckView extends Component {
   }
 
   toggleShuffle = () => {
-    const { cards: originalCards } = this.props.navigation.state.params;
-    this.setState(({ shuffle, cards }) => ({
+    this.setState(({ shuffle, cards, original }) => ({
       shuffle: !shuffle,
-      cards: !shuffle ? this.shuffleCards(cards) : originalCards
+      cards: !shuffle ? this.shuffleCards(cards) : original
     }));
   };
 
   render() {
-    const { title, cards: originalCards } = this.props.navigation.state.params;
-    const { cards } = this.state;
-    const { shuffle } = this.state;
+    const { title } = this.props.navigation.state.params;
+    const { cards, shuffle } = this.state;
     return (
       <ScrollView>
         <Deck title={title} cards={cards}>
@@ -110,3 +114,11 @@ export default class DeckView extends Component {
     );
   }
 }
+
+function mapStateToProps({ cards }) {
+  return {
+    cardStore: cards.data
+  };
+}
+
+export default connect(mapStateToProps)(DeckView);

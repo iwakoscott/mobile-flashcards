@@ -14,8 +14,9 @@ const HomeViewWrapper = styled.View`
 
 class Home extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchAndHandleCards());
-    this.props.dispatch(fetchAndHandleDecks());
+    const { dispatch } = this.props;
+    dispatch(fetchAndHandleCards());
+    dispatch(fetchAndHandleDecks());
   }
 
   render() {
