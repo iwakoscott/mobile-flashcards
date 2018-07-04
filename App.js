@@ -8,6 +8,12 @@ import {
 import Home from "./components/Home";
 import AddDeck from "./components/AddDeck";
 import DeckView from "./components/DeckView";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducers from "./reducers";
+
+const store = createStore(reducers, thunk);
 
 const Tabs = createBottomTabNavigator({
   "All Decks": {
@@ -49,9 +55,11 @@ const MainNavigator = createStackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <MainNavigator />;
-      </View>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <MainNavigator />;
+        </View>
+      </Provider>
     );
   }
 }
