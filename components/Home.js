@@ -1,51 +1,47 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { PressableDeck } from "./Deck";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, AsyncStorage } from "react-native";
+import { connect } from "react-redux";
+import { fetchAndHandleCards } from "../actions/cards";
+import { fetchAndHandleDecks } from "../actions/decks";
+
 const HomeViewWrapper = styled.View`
   flex: 1;
   justify-content: center;
   margin-top: 10px;
 `;
 
-export default function Home(props) {
-  return (
-    <HomeViewWrapper>
-      <FlatList
-        data={[
-          {
-            key: "React",
-            title: "React",
-            cards: [
-              {
-                cardId: "jfsisfd893j3jnf",
-                question: "What is a React Element?",
-                answer:
-                  "A React Element is a Object representation of a DOM node."
-              },
-              {
-                cardId: "fdsjklfoweir3d",
-                question: "What is a Component?",
-                answer:
-                  "A Component is a class or function that returns a React Element."
-              },
-              {
-                cardId: "fdsjkasd3lfoweir3d",
-                question: "Do you love React?",
-                answer: "What kind of question is that? 😍"
+class Home extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchAndHandleCards());
+    this.props.dispatch(fetchAndHandleDecks());
+  }
+
+  render() {
+    return (
+      <HomeViewWrapper>
+        <FlatList
+          data={this.props.data}
+          keyExtractor={({ deckId }) => deckId}
+          renderItem={({ item }) => (
+            <PressableDeck
+              {...item}
+              onPress={() =>
+                this.props.navigation.navigate("DeckView", { ...item })
               }
-            ]
-          },
-          { key: "Redux", title: "Redux", cards: [] },
-          { key: "Mathmatics", title: "Mathematics", cards: [] }
-        ]}
-        renderItem={({ item }) => (
-          <PressableDeck
-            {...item}
-            onPress={() => props.navigation.navigate("DeckView", { ...item })}
-          />
-        )}
-      />
-    </HomeViewWrapper>
-  );
+            />
+          )}
+        />
+      </HomeViewWrapper>
+    );
+  }
 }
+
+function mapStateToProps({ decks }) {
+  return {
+    data: Object.values(decks.data)
+  };
+}
+
+export default connect(mapStateToProps)(Home);

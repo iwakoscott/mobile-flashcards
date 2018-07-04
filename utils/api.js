@@ -5,7 +5,7 @@ const CARDS_STORAGE_KEY = "CARDS_STORAGE_KEY";
 
 const CARDS_DATA = {
   ca0d517f4a684e59b84f99a1dcc47a4c: {
-    cardId: ca0d517f4a684e59b84f99a1dcc47a4c,
+    cardId: "ca0d517f4a684e59b84f99a1dcc47a4c",
     question: "What is a React Element?",
     answer: "A React Element is an object representation of a DOM node."
   },
@@ -76,6 +76,7 @@ function setDummyData(type, storageKey) {
       break;
   }
   AsyncStorage.setItem(storageKey, JSON.stringify(data));
+  return data;
 }
 
 export function fetchDecks() {

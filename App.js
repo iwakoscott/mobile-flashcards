@@ -10,10 +10,10 @@ import AddDeck from "./components/AddDeck";
 import DeckView from "./components/DeckView";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducers from "./reducers";
 
-const store = createStore(reducers, thunk);
+const store = createStore(reducers, applyMiddleware(thunk));
 
 const Tabs = createBottomTabNavigator({
   "All Decks": {

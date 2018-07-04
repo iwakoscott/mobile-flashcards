@@ -5,7 +5,7 @@ import {
 } from "../actions/cards";
 
 const initialState = {
-  data: [],
+  data: {},
   error: null,
   isFetching: false
 };
@@ -22,7 +22,10 @@ export default function cards(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        data: action.cards
+        data: {
+          ...state.data,
+          ...action.cards
+        }
       };
     case FETCH_CARDS_FAIL:
       return {
