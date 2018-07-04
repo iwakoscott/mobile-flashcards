@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get("window");
 import { HeaderText, MutedText } from "./Styled";
 
 const DeckViewWrapper = styled.View`
-  background-color: #f7f1e3;
+  background-color: white;
   border-radius: 20;
   padding: 20px;
   margin: 17px 10px 0px 10px;

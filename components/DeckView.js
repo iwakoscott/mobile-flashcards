@@ -104,7 +104,7 @@ export default class DeckView extends Component {
           )}
         </AddCardViewWrapper>
         <View style={{ justifyContent: "center" }}>
-          {originalCards.map(card => <Card key={card.cardId} {...card} />)}
+          {cards.map(card => <Card key={card.cardId} {...card} />)}
         </View>
       </ScrollView>
     );

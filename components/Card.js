@@ -21,7 +21,7 @@ const CardViewWrapper = styled.View`
 `;
 
 const CardFooterViewWrapper = styled.View`
-  background-color: ${props => (props.front === true ? `#ff5e57` : `#00b894`)};
+  background-color: ${props => (props.front === true ? `#ff5e57` : `#57b9e3`)};
   padding: 10px;
   justify-content: center;
   align-items: center;
