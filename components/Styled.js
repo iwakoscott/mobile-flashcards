@@ -1,17 +1,22 @@
 import styled, { css } from "styled-components";
+import { Text, View, TouchableOpacity } from "react-native";
 
 export const HeaderText = styled.Text`
-  font-size: 40px;
+  font-size: ${props => (props.fontSize ? props.fontSize : "45px")};
   ${props =>
     props.centered &&
     css`
       text-align: center;
     `};
+  ${props =>
+    props.margin &&
+    css`
+      margin: ${props.margin}px;
+    `};
 `;
 
 export const SubheaderText = styled.Text`
   font-size: 25px;
-  color: #e84118;
 `;
 
 export const MutedText = styled.Text`

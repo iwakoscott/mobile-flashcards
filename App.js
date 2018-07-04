@@ -40,7 +40,7 @@ const MainNavigator = createStackNavigator({
     navigationOptions: {
       headerTintColor: "white",
       headerStyle: {
-        backgroundColor: "#b33939"
+        backgroundColor: "#57b9e3"
       }
     }
   }
@@ -48,6 +48,10 @@ const MainNavigator = createStackNavigator({
 
 export default class App extends React.Component {
   render() {
-    return <MainNavigator />;
+    return (
+      <View style={{ flex: 1 }}>
+        <MainNavigator />;
+      </View>
+    );
   }
 }
