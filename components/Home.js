@@ -41,7 +41,7 @@ class Home extends Component {
 
 function mapStateToProps({ decks }) {
   return {
-    data: Object.values(decks.data)
+    data: Object.values(decks.data).sort((a, b) => b.timestamp - a.timestamp)
   };
 }
 

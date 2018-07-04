@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Dimensions, TouchableOpacity } from "react-native";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const { width, height } = Dimensions.get("window");
 import { HeaderText, MutedText } from "./Styled";
@@ -15,6 +15,11 @@ const DeckViewWrapper = styled.View`
   shadow-color: rgba(0, 0, 0, 0.43);
   shadow-offset: 0px 10px;
   min-height: 250px;
+  ${props =>
+    props.width &&
+    css`
+      width: ${props.width};
+    `};
 `;
 
 const DeckBodyViewWrapper = styled.View`
@@ -33,6 +38,10 @@ export function PressableDeck({ title, cards, onPress }) {
       <Deck title={title} cards={cards} />
     </TouchableOpacity>
   );
+}
+
+export function NewDeck({ children, width }) {
+  return <DeckViewWrapper width={width}>{children}</DeckViewWrapper>;
 }
 
 export default function Deck({ title, cards, children }) {

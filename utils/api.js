@@ -1,4 +1,5 @@
 import { AsyncStorage } from "react-native";
+import uuidv1 from "uuid/v1";
 
 const DECKS_STORAGE_KEY = "DECKS_STORAGE_KEY";
 const CARDS_STORAGE_KEY = "CARDS_STORAGE_KEY";
@@ -93,4 +94,15 @@ export function fetchCards() {
       ? setDummyData("CARDS", CARDS_STORAGE_KEY)
       : results;
   });
+}
+
+export function addDeck(deck) {
+  const { deckId } = deck;
+  return AsyncStorage.setItem(deckId, JSON.stringify(deck)).then(() => ({
+    [deckId]: deck
+  }));
+}
+
+export function generateUID() {
+  return uuidv1().replace(/-/g, "");
 }

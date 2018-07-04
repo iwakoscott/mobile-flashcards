@@ -1,5 +1,10 @@
 import styled, { css } from "styled-components";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, TextInput } from "react-native";
+
+export const StyledTextInput = styled.TextInput`
+  font-size: 30px;
+  text-align: center;
+`;
 
 export const HeaderText = styled.Text`
   font-size: ${props => (props.fontSize ? props.fontSize : "45px")};

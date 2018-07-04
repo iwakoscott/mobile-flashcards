@@ -1,7 +1,10 @@
 import {
   FETCH_DECKS,
   FETCH_DECKS_SUCCESS,
-  FETCH_DECKS_FAIL
+  FETCH_DECKS_FAIL,
+  ADD_DECK,
+  ADD_DECK_SUCCESS,
+  ADD_DECK_FAIL
 } from "../actions/decks";
 
 const initialState = {
@@ -31,6 +34,24 @@ export default function decks(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
+        error: action.error
+      };
+    case ADD_DECK:
+      return {
+        ...state,
+        error: null
+      };
+    case ADD_DECK_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.deck
+        }
+      };
+    case ADD_DECK_FAIL:
+      return {
+        ...state,
         error: action.error
       };
     default:
