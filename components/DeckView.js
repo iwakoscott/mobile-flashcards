@@ -10,7 +10,7 @@ import Deck from "./Deck";
 import Button, { TextButton } from "./Button";
 import { SubheaderText } from "./Styled";
 import styled from "styled-components";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import Card from "./Card";
 import shuffle from "shuffle-array";
 import { connect } from "react-redux";
@@ -71,7 +71,22 @@ class DeckView extends Component {
     return (
       <ScrollView>
         <Deck title={title} cards={cards}>
-          <Button>Start Quiz!</Button>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+            <Button height="50px" fontSize="20px" buttonStart>
+              Start Quiz!
+            </Button>
+            <Button height="50px" color="#F79F1F">
+              <Entypo name="edit" size={20} color="white" />
+            </Button>
+            <Button height="50px" color="#EA2027" buttonEnd>
+              <Entypo name="trash" size={20} color="white" />
+            </Button>
+          </View>
         </Deck>
 
         <SubheaderViewWrapper>

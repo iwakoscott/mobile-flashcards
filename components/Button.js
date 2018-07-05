@@ -20,11 +20,27 @@ const TextButtonWrapper = styled.TouchableOpacity`
 `;
 
 const ButtonWrapper = styled.TouchableOpacity`
-  border-radius: 3;
   align-items: center;
   justify-content: center;
   padding: ${props => (props.padding ? props.padding : `15px`)};
   background-color: ${props => (props.color ? props.color : "#57b9e3")};
+  ${props =>
+    props.buttonStart &&
+    css`
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    `}
+  ${props =>
+    props.buttonEnd &&
+    css`
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    `}
+  ${props =>
+    props.height &&
+    css`
+      height: ${props.height};
+    `};
 `;
 
 const ButtonText = styled.Text`
