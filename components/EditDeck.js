@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { NewDeck } from "./Deck";
@@ -51,18 +57,24 @@ class EditDeck extends Component {
           alignItems: "stretch"
         }}>
         <HeaderText centered>Edit Deck!</HeaderText>
-        <NewDeck>
-          <View
-            style={{ flex: 1, justifyContent: "space-between", marginTop: 20 }}>
-            <StyledTextInput
-              onChangeText={this.handleOnChangeText}
-              value={this.state.title}
-              placeholder="Deck Title"
-              maxLength={40}
-            />
-            <Button onPress={this.handleSubmit}>Edit Deck</Button>
-          </View>
-        </NewDeck>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <NewDeck>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "space-between",
+                marginTop: 20
+              }}>
+              <StyledTextInput
+                onChangeText={this.handleOnChangeText}
+                value={this.state.title}
+                placeholder="Deck Title"
+                maxLength={40}
+              />
+              <Button onPress={this.handleSubmit}>Edit Deck</Button>
+            </View>
+          </NewDeck>
+        </KeyboardAvoidingView>
       </View>
     );
   }
