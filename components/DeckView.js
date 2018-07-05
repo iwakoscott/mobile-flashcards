@@ -4,7 +4,8 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 import Deck from "./Deck";
 import Button, { TextButton } from "./Button";
@@ -14,6 +15,7 @@ import { Ionicons, Entypo } from "@expo/vector-icons";
 import Card from "./Card";
 import shuffle from "shuffle-array";
 import { connect } from "react-redux";
+import { handleDeleteDeck } from "../actions/decks";
 
 const { width, height } = Dimensions.get("window");
 
@@ -65,8 +67,13 @@ class DeckView extends Component {
     }));
   };
 
+  onDeleteDeck = deckId => {
+    this.props.dispatch(handleDeleteDeck(deckId));
+    this.props.navigation.navigate("Home");
+  };
+
   render() {
-    const { title } = this.props.navigation.state.params;
+    const { title, deckId } = this.props.navigation.state.params;
     const { cards, shuffle } = this.state;
     return (
       <ScrollView>
@@ -83,7 +90,23 @@ class DeckView extends Component {
             <Button height="50px" color="#F79F1F">
               <Entypo name="edit" size={20} color="white" />
             </Button>
-            <Button height="50px" color="#EA2027" buttonEnd>
+            <Button
+              height="50px"
+              color="#EA2027"
+              buttonEnd
+              onPress={() =>
+                Alert.alert(
+                  `Wait! 👋 `,
+                  `Are you sure you want to delete the '${title}' deck?`,
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => this.onDeleteDeck(deckId)
+                    },
+                    { text: "Cancel", style: "cancel" }
+                  ]
+                )
+              }>
               <Entypo name="trash" size={20} color="white" />
             </Button>
           </View>

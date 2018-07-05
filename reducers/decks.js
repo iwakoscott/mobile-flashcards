@@ -4,8 +4,12 @@ import {
   FETCH_DECKS_FAIL,
   ADD_DECK,
   ADD_DECK_SUCCESS,
-  ADD_DECK_FAIL
+  ADD_DECK_FAIL,
+  DELETE_DECK,
+  DELETE_DECK_SUCCESS,
+  DELETE_DECK_FAIL
 } from "../actions/decks";
+import { decouple } from "../utils/tools";
 
 const initialState = {
   data: {},
@@ -50,6 +54,23 @@ export default function decks(state = initialState, action) {
         }
       };
     case ADD_DECK_FAIL:
+      return {
+        ...state,
+        error: action.error
+      };
+    case DELETE_DECK:
+      return {
+        ...state,
+        error: null
+      };
+    case DELETE_DECK_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...decouple(state.data)(action.deckId)
+        }
+      };
+    case DELETE_DECK_FAIL:
       return {
         ...state,
         error: action.error

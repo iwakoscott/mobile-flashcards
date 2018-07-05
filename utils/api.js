@@ -1,4 +1,5 @@
 import { AsyncStorage } from "react-native";
+import { decouple } from "./tools";
 import uuidv1 from "uuid/v1";
 
 const DECKS_STORAGE_KEY = "DECKS_STORAGE_KEY";
@@ -64,14 +65,6 @@ const DECKS_DATA = {
   }
 };
 
-function decouple(state) {
-  return prop => {
-    let copy = state;
-    delete copy[prop];
-    return copy;
-  };
-}
-
 function setDummyData(type, storageKey) {
   let data = {};
   switch (type) {
@@ -123,13 +116,15 @@ export function addDeck(deck) {
 }
 
 export function removeDeck(deckId) {
-  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
-    const oldState = JSON.parse(results);
-    AsyncStorage.setItem(
-      DECKS_STORAGE_KEY,
-      JSON.stringify(decouple(oldState)(deckId))
-    );
-  });
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        DECKS_STORAGE_KEY,
+        JSON.stringify(decouple(oldState)(deckId))
+      );
+    })
+    .then(() => deckId);
 }
 
 export function generateUID() {

@@ -1,4 +1,4 @@
-import { fetchDecks, addDeck } from "../utils/api";
+import { fetchDecks, addDeck, removeDeck } from "../utils/api";
 
 export const FETCH_DECKS = "FETCH_DECKS";
 export const FETCH_DECKS_SUCCESS = "FETCH_DECKS_SUCCESS";
@@ -6,6 +6,9 @@ export const FETCH_DECKS_FAIL = "FETCH_DECKS_FAIL";
 export const ADD_DECK = "ADD_DECK";
 export const ADD_DECK_SUCCESS = "ADD_DECK_SUCCESS";
 export const ADD_DECK_FAIL = "ADD_DECK_FAIL";
+export const DELETE_DECK = "DELETE_DECK";
+export const DELETE_DECK_SUCCESS = "DELETE_DECK_SUCCESS";
+export const DELETE_DECK_FAIL = "DELETE_DECK_FAIL";
 
 function fetchingDecks() {
   return {
@@ -47,6 +50,26 @@ function addDeckFail(error) {
   };
 }
 
+function deletingDeck() {
+  return {
+    type: DELETE_DECK
+  };
+}
+
+function deleteDeckSuccess(deckId) {
+  return {
+    type: DELETE_DECK_SUCCESS,
+    deckId
+  };
+}
+
+function deleteDeckFail(error) {
+  return {
+    type: DELETE_DECK_FAIL,
+    error
+  };
+}
+
 export function fetchAndHandleDecks() {
   return dispatch => {
     dispatch(fetchingDecks());
@@ -62,5 +85,14 @@ export function handleAddDeck(deck) {
     addDeck(deck)
       .then(result => dispatch(addDeckSuccess(result)))
       .catch(error => dispatch(addDeckFail(error)));
+  };
+}
+
+export function handleDeleteDeck(deckId) {
+  return dispatch => {
+    dispatch(deletingDeck());
+    removeDeck(deckId)
+      .then(deckId => dispatch(deleteDeckSuccess(deckId)))
+      .catch(() => dispatch(deleteDeckFail(`Error deleting deck: ${deckId}`)));
   };
 }
