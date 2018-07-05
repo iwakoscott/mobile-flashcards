@@ -25,6 +25,11 @@ const ButtonWrapper = styled.TouchableOpacity`
   padding: ${props => (props.padding ? props.padding : `15px`)};
   background-color: ${props => (props.color ? props.color : "#57b9e3")};
   ${props =>
+    props.allRound &&
+    css`
+      border-radius: 3px;
+    `}
+  ${props =>
     props.buttonStart &&
     css`
       border-top-left-radius: 3px;

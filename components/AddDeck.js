@@ -70,7 +70,9 @@ class AddDeck extends Component {
                 placeholder="Deck Title"
                 maxLength={40}
               />
-              <Button onPress={this.handleSubmit}>Add Deck</Button>
+              <Button onPress={this.handleSubmit} allRound>
+                Add Deck
+              </Button>
             </View>
           </NewDeck>
         </KeyboardAvoidingView>

@@ -15,6 +15,13 @@ import { generateUID } from "../utils/api";
 import { handleUpdateDeck } from "../actions/decks";
 
 class EditDeck extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { title } = navigation.state.params;
+    return {
+      title: `Edit ${title} ✏️`
+    };
+  };
+
   state = {
     title: ""
   };
@@ -53,10 +60,8 @@ class EditDeck extends Component {
       <View
         style={{
           flex: 1,
-          justifyContent: "space-evenly",
           alignItems: "stretch"
         }}>
-        <HeaderText centered>Edit Deck!</HeaderText>
         <KeyboardAvoidingView behavior="padding" enabled>
           <NewDeck>
             <View
@@ -71,7 +76,9 @@ class EditDeck extends Component {
                 placeholder="Deck Title"
                 maxLength={40}
               />
-              <Button onPress={this.handleSubmit}>Edit Deck</Button>
+              <Button onPress={this.handleSubmit} allRound>
+                Edit Deck
+              </Button>
             </View>
           </NewDeck>
         </KeyboardAvoidingView>
