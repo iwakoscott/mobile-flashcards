@@ -119,10 +119,23 @@ export function removeDeck(deckId) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(results => {
       const oldState = JSON.parse(results);
-      AsyncStorage.setItem(
+      const { cards } = oldState[deckId]; // cards from the deleted deck
+
+      // delete from DECKS_STORAGE
+      const updateDecksStorage = AsyncStorage.setItem(
         DECKS_STORAGE_KEY,
         JSON.stringify(decouple(oldState)(deckId))
       );
+
+      // but, we also need to delete from CARDS_STORAGE
+      AsyncStorage.getItem(CARDS_STORAGE_KEY).then(results => {
+        const oldCardsState = JSON.parse(results);
+        const newCardsState = cards.reduce((acc, next) => {
+          acc = decouple(acc)(next);
+          return acc;
+        }, oldCardsState);
+        AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(newCardsState));
+      });
     })
     .then(() => deckId);
 }
@@ -143,10 +156,11 @@ export function updateDeck(deck) {
     .then(() => deck);
 }
 
-export function addCard(card) {
+export function addCard(card, deckId) {
   const { cardId } = card;
-  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
-    .then(results => {
+
+  const updateCardsStorage = AsyncStorage.getItem(CARDS_STORAGE_KEY).then(
+    results => {
       const oldState = JSON.parse(results);
       AsyncStorage.setItem(
         CARDS_STORAGE_KEY,
@@ -155,10 +169,26 @@ export function addCard(card) {
           [cardId]: card
         })
       );
-    })
-    .then(() => ({
-      cardId: card
-    }));
+    }
+  );
+
+  const updateDecksStorage = AsyncStorage.getItem(DECKS_STORAGE_KEY).then(
+    results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        DECKS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [deckId]: {
+            ...oldState[deckId],
+            cards: [cardId, ...oldState[deckId].cards]
+          }
+        })
+      );
+    }
+  );
+
+  return Promise.all([updateCardsStorage, updateDecksStorage]).then(() => card);
 }
 
 export function generateUID() {

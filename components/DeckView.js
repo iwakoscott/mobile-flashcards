@@ -57,6 +57,18 @@ class DeckView extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.cardStore !== this.props.cardStore) {
+      const { cardStore } = this.props;
+      const { cards } = this.props.navigation.state.params;
+      const newCards = cards.map(cardId => cardStore[cardId]);
+      this.setState({
+        cards: newCards,
+        original: newCards
+      });
+    }
+  }
+
   shuffleCards(cards) {
     return shuffle(cards, { copy: true });
   }
@@ -75,7 +87,7 @@ class DeckView extends Component {
 
   onEditDeck = deck => this.props.navigation.navigate("EditDeck", deck);
 
-  onAddCard = () => this.props.navigation.navigate("AddCard");
+  onAddCard = deckId => this.props.navigation.navigate("AddCard", { deckId });
 
   render() {
     const {
@@ -111,7 +123,7 @@ class DeckView extends Component {
               onPress={() =>
                 Alert.alert(
                   `Wait! 👋 `,
-                  `Are you sure you want to delete the "${title}" deck?`,
+                  `Are you sure you want to delete the "${title}" deck? You can't undo this action.`,
                   [
                     {
                       text: "OK",
@@ -134,7 +146,7 @@ class DeckView extends Component {
           {cards.length === 0 ? (
             <View>
               <Text>Looks like there are no cards in this deck!</Text>
-              <TextButton marginTop={20} onPress={this.onAddCard}>
+              <TextButton marginTop={20} onPress={() => this.onAddCard(deckId)}>
                 Add a card?
               </TextButton>{" "}
             </View>
@@ -148,7 +160,7 @@ class DeckView extends Component {
               <Button
                 color="transparent"
                 padding={"10px"}
-                onPress={this.onAddCard}>
+                onPress={() => this.onAddCard(deckId)}>
                 <Ionicons name="ios-add" size={50} color="black" />
               </Button>
               <Button

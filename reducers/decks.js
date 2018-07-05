@@ -12,6 +12,9 @@ import {
   UPDATE_DECK_SUCCESS,
   UPDATE_DECK_FAIL
 } from "../actions/decks";
+
+import { ADD_CARD_SUCCESS } from "../actions/cards";
+
 import { decouple } from "../utils/tools";
 
 const initialState = {
@@ -95,6 +98,17 @@ export default function decks(state = initialState, action) {
       return {
         ...state,
         error: action.error
+      };
+    case ADD_CARD_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.deckId]: {
+            ...state.data[action.deckId],
+            cards: [action.card.cardId, ...state.data[action.deckId].cards]
+          }
+        }
       };
     default:
       return state;

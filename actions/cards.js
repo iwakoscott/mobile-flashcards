@@ -32,10 +32,11 @@ function addingCard() {
   };
 }
 
-function addCardSuccess(card) {
+function addCardSuccess(card, deckId) {
   return {
     type: ADD_CARD_SUCCESS,
-    card
+    card,
+    deckId
   };
 }
 
@@ -55,11 +56,11 @@ export function fetchAndHandleCards() {
   };
 }
 
-export function handleAddCard(card) {
+export function handleAddCard(card, deckId) {
   return dispatch => {
     dispatch(addingCard());
-    addCard(card)
-      .then(result => dispatch(addCardSuccess(result)))
+    addCard(card, deckId)
+      .then(result => dispatch(addCardSuccess(result, deckId)))
       .catch(() => dispatch(addCardFail(`Error adding card to Storage`)));
   };
 }

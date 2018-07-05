@@ -71,6 +71,7 @@ class EditDeck extends Component {
                 marginTop: 20
               }}>
               <StyledTextInput
+                allowFontScaling
                 onChangeText={this.handleOnChangeText}
                 value={this.state.title}
                 placeholder="Deck Title"
