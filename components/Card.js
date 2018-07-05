@@ -35,7 +35,7 @@ function CardFront({ children, onPress, question }) {
     <CardViewWrapper>
       <HeaderText fontsize={20}>Q</HeaderText>
       <HeaderText fontSize={25} margin={10}>
-        {question}
+        {typeof children !== "undefined" ? children : question}
       </HeaderText>
       <CardFooterViewWrapper front>
         <TouchableOpacity onPress={onPress}>
@@ -51,7 +51,7 @@ function CardBack({ children, onPress, answer }) {
     <CardViewWrapper>
       <HeaderText fontsize={20}>A</HeaderText>
       <HeaderText fontSize={25} margin={10}>
-        {answer}
+        {typeof children !== "undefined" ? children : answer}
       </HeaderText>
       <CardFooterViewWrapper>
         <TouchableOpacity onPress={onPress}>
@@ -64,7 +64,7 @@ function CardBack({ children, onPress, answer }) {
 
 export default class Card extends Component {
   render() {
-    const { question, answer, index } = this.props;
+    const { index, children } = this.props;
     return (
       <View
         style={{
@@ -75,16 +75,11 @@ export default class Card extends Component {
           marginBottom: 25,
           padding: 10
         }}>
-        <CardFlip ref={card => (this["card" + index] = card)}>
-          <CardFront
-            question={question}
-            onPress={() => this["card" + index].flip()}
-          />
-          <CardBack
-            answer={answer}
-            onPress={() => this["card" + index].flip()}
-          />
-        </CardFlip>
+        {children({
+          CardFront: CardFront,
+          CardBack: CardBack,
+          CardFlip: CardFlip
+        })}
       </View>
     );
   }

@@ -16,6 +16,7 @@ import Card from "./Card";
 import shuffle from "shuffle-array";
 import { connect } from "react-redux";
 import { handleDeleteDeck } from "../actions/decks";
+import CardFlip from "react-native-card-flip";
 
 const { width, height } = Dimensions.get("window");
 
@@ -164,7 +165,22 @@ class DeckView extends Component {
           )}
         </AddCardViewWrapper>
         <View style={{ justifyContent: "center" }}>
-          {cards.map(card => <Card key={card.cardId} {...card} />)}
+          {cards.map((card, index) => (
+            <Card key={index} card={card}>
+              {({ CardFront, CardBack, CardFlip }) => (
+                <CardFlip ref={card => (this["card" + index] = card)}>
+                  <CardFront
+                    question={card.question}
+                    onPress={() => this["card" + index].flip()}
+                  />
+                  <CardBack
+                    answer={card.answer}
+                    onPress={() => this["card" + index].flip()}
+                  />
+                </CardFlip>
+              )}
+            </Card>
+          ))}
         </View>
       </ScrollView>
     );
