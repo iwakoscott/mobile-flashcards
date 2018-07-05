@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, Dimensions } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { NewDeck } from "./Deck";
@@ -7,14 +7,13 @@ import { HeaderText, StyledTextInput } from "./Styled";
 import Button from "./Button";
 import { generateUID } from "../utils/api";
 import { handleAddDeck } from "../actions/decks";
-const { width } = Dimensions.get("window");
 
 class AddDeck extends Component {
   state = {
     title: ""
   };
 
-  toHome = () => this.props.navigation.navigate("All Decks");
+  nextView = deck => this.props.navigation.navigate("DeckView", deck);
 
   handleOnChangeText = text => this.setState({ title: text });
   buttonIsDisabled = () => this.state.title !== "";
@@ -32,8 +31,8 @@ class AddDeck extends Component {
     // use API to add new Deck
     this.props.dispatch(handleAddDeck(deck));
 
-    // go back home
-    this.toHome();
+    // go to DeckView
+    this.nextView(deck);
 
     // reset title
     this.setState({ title: "" });

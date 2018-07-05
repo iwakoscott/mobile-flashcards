@@ -64,6 +64,14 @@ const DECKS_DATA = {
   }
 };
 
+function decouple(state) {
+  return prop => {
+    let copy = state;
+    delete copy[prop];
+    return copy;
+  };
+}
+
 function setDummyData(type, storageKey) {
   let data = {};
   switch (type) {
@@ -98,9 +106,30 @@ export function fetchCards() {
 
 export function addDeck(deck) {
   const { deckId } = deck;
-  return AsyncStorage.setItem(deckId, JSON.stringify(deck)).then(() => ({
-    [deckId]: deck
-  }));
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        DECKS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [deckId]: deck
+        })
+      );
+    })
+    .then(() => ({
+      [deckId]: deck
+    }));
+}
+
+export function removeDeck(deckId) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+    const oldState = JSON.parse(results);
+    AsyncStorage.setItem(
+      DECKS_STORAGE_KEY,
+      JSON.stringify(decouple(oldState)(deckId))
+    );
+  });
 }
 
 export function generateUID() {
