@@ -143,6 +143,24 @@ export function updateDeck(deck) {
     .then(() => deck);
 }
 
+export function addCard(card) {
+  const { cardId } = card;
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+    .then(results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        CARDS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [cardId]: card
+        })
+      );
+    })
+    .then(() => ({
+      cardId: card
+    }));
+}
+
 export function generateUID() {
   return uuidv1().replace(/-/g, "");
 }

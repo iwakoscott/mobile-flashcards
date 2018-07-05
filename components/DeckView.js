@@ -74,6 +74,8 @@ class DeckView extends Component {
 
   onEditDeck = deck => this.props.navigation.navigate("EditDeck", deck);
 
+  onAddCard = () => this.props.navigation.navigate("AddCard");
+
   render() {
     const {
       title,
@@ -131,7 +133,9 @@ class DeckView extends Component {
           {cards.length === 0 ? (
             <View>
               <Text>Looks like there are no cards in this deck!</Text>
-              <TextButton marginTop={20}>Add a card?</TextButton>{" "}
+              <TextButton marginTop={20} onPress={this.onAddCard}>
+                Add a card?
+              </TextButton>{" "}
             </View>
           ) : (
             <View
@@ -140,7 +144,10 @@ class DeckView extends Component {
                 justifyContent: "space-around",
                 width
               }}>
-              <Button color="transparent" padding={"10px"}>
+              <Button
+                color="transparent"
+                padding={"10px"}
+                onPress={this.onAddCard}>
                 <Ionicons name="ios-add" size={50} color="black" />
               </Button>
               <Button

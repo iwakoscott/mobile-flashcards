@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import AddDeck from "./components/AddDeck";
 import DeckView from "./components/DeckView";
 import EditDeck from "./components/EditDeck";
+import AddCard from "./components/AddCard";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -57,6 +58,15 @@ const MainNavigator = createStackNavigator({
       headerTintColor: "white",
       headerStyle: {
         backgroundColor: "#F79F1F"
+      }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: "#6ab04c"
       }
     }
   }
