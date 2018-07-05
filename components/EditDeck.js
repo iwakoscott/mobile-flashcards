@@ -18,7 +18,7 @@ class EditDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     const { title } = navigation.state.params;
     return {
-      title: `Edit ${title} ✏️`
+      title: `✏️ Edit ${title}`
     };
   };
 

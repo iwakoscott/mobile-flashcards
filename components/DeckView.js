@@ -108,7 +108,7 @@ class DeckView extends Component {
               onPress={() =>
                 Alert.alert(
                   `Wait! 👋 `,
-                  `Are you sure you want to delete the '${title}' deck?`,
+                  `Are you sure you want to delete the "${title}" deck?`,
                   [
                     {
                       text: "OK",

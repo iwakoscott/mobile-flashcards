@@ -25,14 +25,15 @@ class AddDeck extends Component {
   handleSubmit = () => {
     const deckId = generateUID();
     const { title } = this.state;
+    const trimmedTitle = title.trim();
 
-    if (title === "") {
+    if (trimmedTitle === "") {
       Alert.alert(`Oops! ✋`, `Please give your deck a unique title! 🦄`);
     } else {
       const deck = {
         deckId,
         topScore: 0,
-        title,
+        title: trimmedTitle,
         timestamp: Date.now(),
         cards: []
       };
