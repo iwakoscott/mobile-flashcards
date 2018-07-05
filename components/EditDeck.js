@@ -6,33 +6,34 @@ import { NewDeck } from "./Deck";
 import { HeaderText, StyledTextInput } from "./Styled";
 import Button from "./Button";
 import { generateUID } from "../utils/api";
-import { handleAddDeck } from "../actions/decks";
+import { handleUpdateDeck } from "../actions/decks";
 
-class AddDeck extends Component {
+class EditDeck extends Component {
   state = {
     title: ""
   };
 
+  componentDidMount() {
+    const { title } = this.props.navigation.state.params;
+    this.setState({ title });
+  }
+
   nextView = deck => this.props.navigation.navigate("DeckView", deck);
 
   handleOnChangeText = text => this.setState({ title: text });
-  handleSubmit = () => {
-    const deckId = generateUID();
-    const { title } = this.state;
 
-    if (title === "") {
+  handleSubmit = () => {
+    const { title: newTitle } = this.state;
+
+    if (newTitle === "") {
       Alert.alert(`Oops! ✋`, `Please give your deck a unique title! 🦄`);
     } else {
       const deck = {
-        deckId,
-        topScore: 0,
-        title,
-        timestamp: Date.now(),
-        cards: []
+        ...this.props.navigation.state.params,
+        title: newTitle
       };
-      // use API to add new Deck
-      this.props.dispatch(handleAddDeck(deck));
-
+      // use API to update Deck
+      this.props.dispatch(handleUpdateDeck(deck));
       // go to DeckView
       this.nextView(deck);
 
@@ -49,7 +50,7 @@ class AddDeck extends Component {
           justifyContent: "space-evenly",
           alignItems: "stretch"
         }}>
-        <HeaderText centered>Add a Deck!</HeaderText>
+        <HeaderText centered>Edit Deck!</HeaderText>
         <NewDeck>
           <View
             style={{ flex: 1, justifyContent: "space-between", marginTop: 20 }}>
@@ -59,7 +60,7 @@ class AddDeck extends Component {
               placeholder="Deck Title"
               maxLength={40}
             />
-            <Button onPress={this.handleSubmit}>Add Deck</Button>
+            <Button onPress={this.handleSubmit}>Edit Deck</Button>
           </View>
         </NewDeck>
       </View>
@@ -67,4 +68,4 @@ class AddDeck extends Component {
   }
 }
 
-export default connect()(AddDeck);
+export default connect()(EditDeck);

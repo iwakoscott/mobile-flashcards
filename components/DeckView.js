@@ -72,8 +72,14 @@ class DeckView extends Component {
     this.props.navigation.navigate("Home");
   };
 
+  onEditDeck = deck => this.props.navigation.navigate("EditDeck", deck);
+
   render() {
-    const { title, deckId } = this.props.navigation.state.params;
+    const {
+      title,
+      deckId,
+      cards: cardIds
+    } = this.props.navigation.state.params;
     const { cards, shuffle } = this.state;
     return (
       <ScrollView>
@@ -87,7 +93,12 @@ class DeckView extends Component {
             <Button height="50px" fontSize="20px" buttonStart>
               Start Quiz!
             </Button>
-            <Button height="50px" color="#F79F1F">
+            <Button
+              height="50px"
+              color="#F79F1F"
+              onPress={() =>
+                this.onEditDeck(this.props.navigation.state.params)
+              }>
               <Entypo name="edit" size={20} color="white" />
             </Button>
             <Button

@@ -7,7 +7,10 @@ import {
   ADD_DECK_FAIL,
   DELETE_DECK,
   DELETE_DECK_SUCCESS,
-  DELETE_DECK_FAIL
+  DELETE_DECK_FAIL,
+  UPDATE_DECK,
+  UPDATE_DECK_SUCCESS,
+  UPDATE_DECK_FAIL
 } from "../actions/decks";
 import { decouple } from "../utils/tools";
 
@@ -71,6 +74,24 @@ export default function decks(state = initialState, action) {
         }
       };
     case DELETE_DECK_FAIL:
+      return {
+        ...state,
+        error: action.error
+      };
+    case UPDATE_DECK:
+      return {
+        ...state,
+        error: null
+      };
+    case UPDATE_DECK_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.deck.deckId]: action.deck
+        }
+      };
+    case UPDATE_DECK_FAIL:
       return {
         ...state,
         error: action.error

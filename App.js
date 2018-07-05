@@ -8,6 +8,7 @@ import {
 import Home from "./components/Home";
 import AddDeck from "./components/AddDeck";
 import DeckView from "./components/DeckView";
+import EditDeck from "./components/EditDeck";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -47,6 +48,15 @@ const MainNavigator = createStackNavigator({
       headerTintColor: "white",
       headerStyle: {
         backgroundColor: "#57b9e3"
+      }
+    }
+  },
+  EditDeck: {
+    screen: EditDeck,
+    navigationOptions: {
+      headerTintColor: "white",
+      headerStyle: {
+        backgroundColor: "#5fc682"
       }
     }
   }

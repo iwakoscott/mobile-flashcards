@@ -127,6 +127,22 @@ export function removeDeck(deckId) {
     .then(() => deckId);
 }
 
+export function updateDeck(deck) {
+  const { deckId } = deck;
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        DECKS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [deckId]: deck
+        })
+      );
+    })
+    .then(() => deck);
+}
+
 export function generateUID() {
   return uuidv1().replace(/-/g, "");
 }

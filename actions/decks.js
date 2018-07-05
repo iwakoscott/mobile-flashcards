@@ -1,4 +1,4 @@
-import { fetchDecks, addDeck, removeDeck } from "../utils/api";
+import { fetchDecks, addDeck, removeDeck, updateDeck } from "../utils/api";
 
 export const FETCH_DECKS = "FETCH_DECKS";
 export const FETCH_DECKS_SUCCESS = "FETCH_DECKS_SUCCESS";
@@ -9,6 +9,9 @@ export const ADD_DECK_FAIL = "ADD_DECK_FAIL";
 export const DELETE_DECK = "DELETE_DECK";
 export const DELETE_DECK_SUCCESS = "DELETE_DECK_SUCCESS";
 export const DELETE_DECK_FAIL = "DELETE_DECK_FAIL";
+export const UPDATE_DECK = "UPDATE_DECK";
+export const UPDATE_DECK_SUCCESS = "UPDATE_DECK_SUCCESS";
+export const UPDATE_DECK_FAIL = "UPDATE_DECK_FAIL";
 
 function fetchingDecks() {
   return {
@@ -70,6 +73,27 @@ function deleteDeckFail(error) {
   };
 }
 
+function updatingDeck() {
+  return {
+    type: UPDATE_DECK,
+    error: null
+  };
+}
+
+function updateDeckSuccess(deck) {
+  return {
+    type: UPDATE_DECK_SUCCESS,
+    deck
+  };
+}
+
+function updateDeckFail(error) {
+  return {
+    type: UPDATE_DECK_FAIL,
+    error
+  };
+}
+
 export function fetchAndHandleDecks() {
   return dispatch => {
     dispatch(fetchingDecks());
@@ -94,5 +118,16 @@ export function handleDeleteDeck(deckId) {
     removeDeck(deckId)
       .then(deckId => dispatch(deleteDeckSuccess(deckId)))
       .catch(() => dispatch(deleteDeckFail(`Error deleting deck: ${deckId}`)));
+  };
+}
+
+export function handleUpdateDeck(deck) {
+  return dispatch => {
+    dispatch(updatingDeck());
+    updateDeck(deck)
+      .then(result => dispatch(updateDeckSuccess(result)))
+      .catch(() =>
+        dispatch(updateDeckFail(`Error updating deck: ${deck.deckId}`))
+      );
   };
 }
