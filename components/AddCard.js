@@ -124,7 +124,7 @@ class AddCard extends Component {
             alignItems: "center",
             justifyContent: "center"
           }}>
-          <Button onPress={this.onSubmit} allRound>
+          <Button fontSize={20} onPress={this.onSubmit} allRound>
             Add to Deck
           </Button>
         </View>
