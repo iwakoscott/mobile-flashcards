@@ -44,7 +44,8 @@ class AddCard extends Component {
       const card = {
         cardId: generateUID(),
         question: questionTrimmed,
-        answer: answerTrimmed
+        answer: answerTrimmed,
+        timestamp: Date.now()
       };
 
       const { deckId } = navigation.state.params;

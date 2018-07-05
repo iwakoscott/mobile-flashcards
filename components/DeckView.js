@@ -42,18 +42,15 @@ class DeckView extends Component {
 
   state = {
     shuffle: false,
-    cards: [],
-    original: []
+    cards: []
   };
 
   componentDidMount() {
     const { cards: cardIds } = this.props.navigation.state.params;
     const { cardStore } = this.props;
-    const cardsData = cardIds.map(cardId => cardStore[cardId]);
     // cards is an array of cardIds, we need to fetch these ids from the store
     this.setState({
-      cards: cardsData,
-      original: cardsData
+      cards: cardIds.map(cardId => cardStore[cardId])
     });
   }
 
@@ -61,10 +58,8 @@ class DeckView extends Component {
     if (prevProps.cardStore !== this.props.cardStore) {
       const { cardStore } = this.props;
       const { cards } = this.props.navigation.state.params;
-      const newCards = cards.map(cardId => cardStore[cardId]);
       this.setState({
-        cards: newCards,
-        original: newCards
+        cards: cards.map(cardId => cardStore[cardId])
       });
     }
   }
@@ -74,9 +69,11 @@ class DeckView extends Component {
   }
 
   toggleShuffle = () => {
-    this.setState(({ shuffle, cards, original }) => ({
+    this.setState(({ shuffle, cards }) => ({
       shuffle: !shuffle,
-      cards: !shuffle ? this.shuffleCards(cards) : original
+      cards: !shuffle
+        ? this.shuffleCards(cards)
+        : cards.sort((a, b) => b.timestamp - a.timestamp)
     }));
   };
 

@@ -9,28 +9,33 @@ const CARDS_DATA = {
   ca0d517f4a684e59b84f99a1dcc47a4c: {
     cardId: "ca0d517f4a684e59b84f99a1dcc47a4c",
     question: "What is a React Element?",
-    answer: "A React Element is an object representation of a DOM node."
+    answer: "A React Element is an object representation of a DOM node.",
+    timestamp: 1529967629409
   },
   "46a5165e44144b8d88688ada865f5232": {
     cardId: "46a5165e44144b8d88688ada865f5232",
     question: "What is a Component?",
     answer:
-      "A React Component is a function or class that takes in props and returns a React Element."
+      "A React Component is a function or class that takes in props and returns a React Element.",
+    timestamp: 1527980429409
   },
   "728478bf9cbb400784564f68f3c619fc": {
     cardId: "728478bf9cbb400784564f68f3c619fc",
     question: "Do you love React.js?",
-    answer: "What kind of question is that? 😍 ⚛️"
+    answer: "What kind of question is that? 😍 ⚛️",
+    timestamp: 1527894029409
   },
   ac90ac8caa0d4d189bb559e1f19c5bcf: {
     cardId: "ac90ac8caa0d4d189bb559e1f19c5bcf",
     question: "What is the capital of California?",
-    answer: "Sacramento"
+    answer: "Sacramento",
+    timestamp: 1525734029409
   },
   "9e615313343949008d33f6242ddc9bcb": {
     cardId: "9e615313343949008d33f6242ddc9bcb",
     question: "What is Scott's favorite movie series?",
-    answer: "Paddington 🐻"
+    answer: "Paddington 🐻",
+    timestamp: 1524783629409
   }
 };
 
