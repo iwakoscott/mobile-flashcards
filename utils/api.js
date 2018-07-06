@@ -90,7 +90,7 @@ export function fetchDecks() {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
     return results === null
       ? setDummyData("DECKS", DECKS_STORAGE_KEY)
-      : results;
+      : JSON.parse(results);
   });
 }
 
@@ -98,7 +98,7 @@ export function fetchCards() {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY).then(results => {
     return results === null
       ? setDummyData("CARDS", CARDS_STORAGE_KEY)
-      : results;
+      : JSON.parse(results);
   });
 }
 

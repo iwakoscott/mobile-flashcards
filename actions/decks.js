@@ -98,7 +98,7 @@ export function fetchAndHandleDecks() {
   return dispatch => {
     dispatch(fetchingDecks());
     fetchDecks()
-      .then(decks => dispatch(fetchDecksSuccess(JSON.parse(decks))))
+      .then(decks => dispatch(fetchDecksSuccess(decks)))
       .catch(() => dispatch(fetchDecksFail("Error fetching Decks!")));
   };
 }

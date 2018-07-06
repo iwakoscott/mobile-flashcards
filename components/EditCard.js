@@ -7,10 +7,10 @@ import Button from "./Button";
 import { generateUID } from "../utils/api";
 import { handleAddCard } from "../actions/cards";
 
-class AddCard extends Component {
+class EditCard extends Component {
   static navigationOptions = () => {
     return {
-      title: `Add a New Card`
+      title: `Edit Mode 🔧`
     };
   };
 
@@ -21,6 +21,8 @@ class AddCard extends Component {
 
   componentDidMount() {
     // When component mounts, we want to update the question, answer states which can be passed from prev route
+    const { question, answer } = this.props.navigation.state.params;
+    this.setState({ question, answer });
   }
 
   onSubmit = () => {
@@ -54,15 +56,9 @@ class AddCard extends Component {
 
       const { deckId } = navigation.state.params;
 
-      const deck = decks.data[deckId];
-      const { cards: oldCards } = deck;
+      // dispatch(handleAddCard(card, deckId));
 
-      dispatch(handleAddCard(card, deckId));
-
-      navigation.navigate("DeckView", {
-        ...deck,
-        cards: [card.cardId, ...oldCards]
-      });
+      navigation.navigate("EditDeck", { deckId });
     }
   };
 
@@ -83,7 +79,7 @@ class AddCard extends Component {
         <Card>
           {({ CardFlip, CardFront, CardBack }) => (
             <CardFlip ref={card => (this.card = card)}>
-              <CardFront onPress={() => this.card.flip()}>
+              <CardFront onPress={() => this.card.flip()} onEditCardView>
                 <View>
                   <StyledTextInput
                     allowFontScaling
@@ -96,7 +92,7 @@ class AddCard extends Component {
                   />
                 </View>
               </CardFront>
-              <CardBack onPress={() => this.card.flip()}>
+              <CardBack onPress={() => this.card.flip()} onEditCardView>
                 <View>
                   <StyledTextInput
                     allowFontScaling
@@ -118,8 +114,12 @@ class AddCard extends Component {
             alignItems: "center",
             justifyContent: "center"
           }}>
-          <Button fontSize={20} onPress={this.onSubmit} allRound>
-            Add to Deck
+          <Button
+            color="#f1c40f"
+            fontSize={20}
+            onPress={this.onSubmit}
+            allRound>
+            Save Changes
           </Button>
         </View>
       </View>
@@ -127,4 +127,4 @@ class AddCard extends Component {
   }
 }
 
-export default connect(({ decks }) => ({ decks }))(AddCard);
+export default connect()(EditCard);

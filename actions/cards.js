@@ -75,7 +75,7 @@ export function fetchAndHandleCards() {
   return dispatch => {
     dispatch(fetchingCards());
     fetchCards()
-      .then(cards => dispatch(fetchCardsSuccess(JSON.parse(cards))))
+      .then(cards => dispatch(fetchCardsSuccess(cards)))
       .catch(() => dispatch(fetchCardsFail("Error fetching cards!")));
   };
 }

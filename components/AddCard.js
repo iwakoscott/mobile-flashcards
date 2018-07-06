@@ -50,15 +50,8 @@ class AddCard extends Component {
 
       const { deckId } = navigation.state.params;
 
-      const deck = decks.data[deckId];
-      const { cards: oldCards } = deck;
-
       dispatch(handleAddCard(card, deckId));
-
-      navigation.navigate("DeckView", {
-        ...deck,
-        cards: [card.cardId, ...oldCards]
-      });
+      navigation.navigate("DeckView", { deckId });
     }
   };
 

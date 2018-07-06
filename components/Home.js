@@ -19,26 +19,14 @@ const HomeViewWrapper = styled.View`
 `;
 
 class Home extends Component {
-  state = {
-    data: []
-  };
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchAndHandleCards());
     dispatch(fetchAndHandleDecks());
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.data !== this.props.data) {
-      this.setState({
-        data: this.props.data
-      });
-    }
-  }
-
   render() {
-    const noCards = this.state.data.length === 0;
+    const noCards = this.props.data.length === 0;
     return (
       <HomeViewWrapper noCards={noCards}>
         {noCards ? (
@@ -51,7 +39,7 @@ class Home extends Component {
           </View>
         ) : (
           <FlatList
-            data={this.state.data}
+            data={this.props.data}
             keyExtractor={({ deckId }) => deckId}
             renderItem={({ item }) => (
               <PressableDeck

@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 class EditDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: `Edit Mode 👷‍♂️`
+      title: `Edit Mode 👷‍♂️👷‍♀️`
     };
   };
 
@@ -53,6 +53,8 @@ class EditDeck extends Component {
     );
   };
 
+  onEditCard = card => this.props.navigation.navigate("EditCard", card);
+
   handleSubmit = () => {
     const { title: newTitle } = this.state;
     const trimmedTitle = newTitle.trim();
@@ -81,13 +83,6 @@ class EditDeck extends Component {
       );
     }
   };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextProps.cardStore !== this.props.cardStore ||
-      this.state.title !== nextState.title
-    );
-  }
 
   render() {
     const { cardStore, deckStore } = this.props;
@@ -122,7 +117,7 @@ class EditDeck extends Component {
               </View>
               <Button
                 onPress={this.handleSubmit}
-                color="#F79F1F"
+                color="#f1c40f"
                 fontSize={20}
                 allRound>
                 Edit Title{" "}
@@ -140,11 +135,13 @@ class EditDeck extends Component {
                       question={card.question}
                       onPress={() => this["card" + index].flip()}
                       onDelete={() => this.onDeleteCard(card.cardId, deckId)}
+                      onEdit={() => this.onEditCard(card)}
                     />
                     <CardBack
                       editable
                       answer={card.answer}
                       onPress={() => this["card" + index].flip()}
+                      onEdit={() => this.onEditCard(card)}
                       onDelete={() => this.onDeleteCard(card.cardId, deckId)}
                     />
                   </CardFlip>

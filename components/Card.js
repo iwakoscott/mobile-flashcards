@@ -30,7 +30,7 @@ const CardFooterViewWrapper = styled.View`
   border-bottom-left-radius: 20;
   border-bottom-right-radius: 20;
   ${props =>
-    props.editable &&
+    (props.editable || props.onEditCardView) &&
     css`
       background-color: #f79f1f;
     `};
@@ -42,7 +42,8 @@ function CardFront({
   question,
   editable,
   onEdit,
-  onDelete
+  onDelete,
+  onEditCardView
 }) {
   return (
     <CardViewWrapper>
@@ -50,7 +51,10 @@ function CardFront({
       <HeaderText fontSize={25} margin={10}>
         {typeof children !== "undefined" ? children : question}
       </HeaderText>
-      <CardFooterViewWrapper front editable={editable}>
+      <CardFooterViewWrapper
+        front
+        editable={editable}
+        onEditCardView={onEditCardView}>
         {editable && (
           <TouchableOpacity onPress={onEdit}>
             <FontAwesome name="edit" size={30} color="black" />
@@ -71,14 +75,24 @@ function CardFront({
   );
 }
 
-function CardBack({ children, onPress, answer, onEdit, editable, onDelete }) {
+function CardBack({
+  children,
+  onPress,
+  answer,
+  onEdit,
+  editable,
+  onDelete,
+  onEditCardView
+}) {
   return (
     <CardViewWrapper>
       <HeaderText fontsize={20}>A</HeaderText>
       <HeaderText fontSize={25} margin={10}>
         {typeof children !== "undefined" ? children : answer}
       </HeaderText>
-      <CardFooterViewWrapper editable={editable}>
+      <CardFooterViewWrapper
+        editable={editable}
+        onEditCardView={onEditCardView}>
         {editable && (
           <TouchableOpacity onPress={onEdit}>
             <FontAwesome name="edit" size={30} color="black" />
