@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 class EditDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: `Edit Mode 👷‍♂️👷‍♀️`
+      title: `👷‍♂️ Edit Mode 👷‍♀️`
     };
   };
 
@@ -53,7 +53,8 @@ class EditDeck extends Component {
     );
   };
 
-  onEditCard = card => this.props.navigation.navigate("EditCard", card);
+  onEditCard = (card, defaults) =>
+    this.props.navigation.navigate("EditCard", { card, defaults });
 
   handleSubmit = () => {
     const { title: newTitle } = this.state;
@@ -135,13 +136,13 @@ class EditDeck extends Component {
                       question={card.question}
                       onPress={() => this["card" + index].flip()}
                       onDelete={() => this.onDeleteCard(card.cardId, deckId)}
-                      onEdit={() => this.onEditCard(card)}
+                      onEdit={() => this.onEditCard(card, "DEFAULT_FRONT")}
                     />
                     <CardBack
                       editable
                       answer={card.answer}
                       onPress={() => this["card" + index].flip()}
-                      onEdit={() => this.onEditCard(card)}
+                      onEdit={() => this.onEditCard(card, "DEFAULT_BACK")}
                       onDelete={() => this.onDeleteCard(card.cardId, deckId)}
                     />
                   </CardFlip>

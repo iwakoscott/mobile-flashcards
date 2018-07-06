@@ -21,7 +21,8 @@ class EditCard extends Component {
 
   componentDidMount() {
     // When component mounts, we want to update the question, answer states which can be passed from prev route
-    const { question, answer } = this.props.navigation.state.params;
+    const { card } = this.props.navigation.state.params;
+    const { question, answer } = card;
     this.setState({ question, answer });
   }
 
@@ -69,6 +70,7 @@ class EditCard extends Component {
 
   render() {
     const { question, answer } = this.state;
+    const { defaults } = this.props.navigation.state.params;
     return (
       <View
         style={{
@@ -77,36 +79,79 @@ class EditCard extends Component {
           alignItems: "center"
         }}>
         <Card>
-          {({ CardFlip, CardFront, CardBack }) => (
-            <CardFlip ref={card => (this.card = card)}>
-              <CardFront onPress={() => this.card.flip()} onEditCardView>
-                <View>
-                  <StyledTextInput
-                    allowFontScaling
-                    maxLength={100}
-                    value={question}
-                    onChangeText={text =>
-                      this.handleOnChangeText(text, "question")
-                    }
-                    placeholder="Add a question"
-                  />
-                </View>
-              </CardFront>
-              <CardBack onPress={() => this.card.flip()} onEditCardView>
-                <View>
-                  <StyledTextInput
-                    allowFontScaling
-                    maxLength={100}
-                    value={answer}
-                    onChangeText={text =>
-                      this.handleOnChangeText(text, "answer")
-                    }
-                    placeholder="Add an answer"
-                  />
-                </View>
-              </CardBack>
-            </CardFlip>
-          )}
+          {({ CardFlip, CardFront, CardBack }) => {
+            return (
+              <CardFlip ref={card => (this.card = card)}>
+                {defaults === "DEFAULT_FRONT" ? (
+                  <CardFront onPress={() => this.card.flip()} onEditCardView>
+                    <View>
+                      <StyledTextInput
+                        backgroundColor="white"
+                        borderColor="#f1f2f6"
+                        allowFontScaling
+                        maxLength={100}
+                        value={question}
+                        onChangeText={text =>
+                          this.handleOnChangeText(text, "question")
+                        }
+                        placeholder="Add a question"
+                      />
+                    </View>
+                  </CardFront>
+                ) : (
+                  <CardBack onPress={() => this.card.flip()} onEditCardView>
+                    <View>
+                      <StyledTextInput
+                        backgroundColor="white"
+                        borderColor="#f1f2f6"
+                        allowFontScaling
+                        maxLength={100}
+                        value={answer}
+                        onChangeText={text =>
+                          this.handleOnChangeText(text, "answer")
+                        }
+                        placeholder="Add an answer"
+                      />
+                    </View>
+                  </CardBack>
+                )}
+
+                {defaults !== "DEFAULT_FRONT" ? (
+                  <CardFront onPress={() => this.card.flip()} onEditCardView>
+                    <View>
+                      <StyledTextInput
+                        backgroundColor="white"
+                        borderColor="#f1f2f6"
+                        allowFontScaling
+                        maxLength={100}
+                        value={question}
+                        onChangeText={text =>
+                          this.handleOnChangeText(text, "question")
+                        }
+                        placeholder="Add a question"
+                      />
+                    </View>
+                  </CardFront>
+                ) : (
+                  <CardBack onPress={() => this.card.flip()} onEditCardView>
+                    <View>
+                      <StyledTextInput
+                        backgroundColor="white"
+                        borderColor="#f1f2f6"
+                        allowFontScaling
+                        maxLength={100}
+                        value={answer}
+                        onChangeText={text =>
+                          this.handleOnChangeText(text, "answer")
+                        }
+                        placeholder="Add an answer"
+                      />
+                    </View>
+                  </CardBack>
+                )}
+              </CardFlip>
+            );
+          }}
         </Card>
         <View
           style={{

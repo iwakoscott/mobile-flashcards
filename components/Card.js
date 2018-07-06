@@ -7,6 +7,12 @@ import { HeaderText } from "./Styled";
 
 const viewPortWidth = Dimensions.get("window").width;
 
+const CardHeaderViewWrapper = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+`;
+
 const CardViewWrapper = styled.View`
   align-items: center;
   justify-content: space-between;
@@ -48,9 +54,12 @@ function CardFront({
   return (
     <CardViewWrapper>
       <HeaderText fontsize={20}>Q</HeaderText>
-      <HeaderText fontSize={25} margin={10}>
-        {typeof children !== "undefined" ? children : question}
-      </HeaderText>
+
+      <CardHeaderViewWrapper>
+        <HeaderText fontSize={25} margin={10}>
+          {typeof children !== "undefined" ? children : question}
+        </HeaderText>
+      </CardHeaderViewWrapper>
       <CardFooterViewWrapper
         front
         editable={editable}

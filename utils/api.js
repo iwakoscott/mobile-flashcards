@@ -27,8 +27,8 @@ const CARDS_DATA = {
   },
   ac90ac8caa0d4d189bb559e1f19c5bcf: {
     cardId: "ac90ac8caa0d4d189bb559e1f19c5bcf",
-    question: "What is Paddington's Aunts name?",
-    answer: "Aunt Lucy",
+    question: "What is Paddington's Aunt's name?",
+    answer: "Aunt Lucy 🐻",
     timestamp: 1525734029409
   },
   "9e615313343949008d33f6242ddc9bcb": {
@@ -36,6 +36,12 @@ const CARDS_DATA = {
     question: "What is Paddington's favorite food?",
     answer: "Marmalade Sandwiches 🍊",
     timestamp: 1524783629409
+  },
+  "9f37a15769924fc6983f77b0d4de8f53": {
+    cardId: "9f37a15769924fc6983f77b0d4de8f53",
+    question: "The backside has a typo.",
+    answer: "Your looking right at it!",
+    timestamp: 1530913044752
   }
 };
 
@@ -56,7 +62,7 @@ const DECKS_DATA = {
     title: "Javascript",
     timestamp: 1525664158186,
     topScore: 0,
-    cards: []
+    cards: ["9f37a15769924fc6983f77b0d4de8f53"]
   },
   "27ddaa32993841d0ad3f4ab8e8ece116": {
     deckId: "27ddaa32993841d0ad3f4ab8e8ece116",
