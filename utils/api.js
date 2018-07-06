@@ -115,9 +115,7 @@ export function addDeck(deck) {
         })
       );
     })
-    .then(() => ({
-      [deckId]: deck
-    }));
+    .then(() => deck);
 }
 
 export function removeDeck(deckId) {

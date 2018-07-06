@@ -18,9 +18,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 class EditDeck extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { title } = navigation.state.params;
     return {
-      title: `✏️ Edit ${title}`
+      title: `✏️ Edit Deck`
     };
   };
 
@@ -30,14 +29,17 @@ class EditDeck extends Component {
   };
 
   componentDidMount() {
-    const { title, cards } = this.props.navigation.state.params;
+    const { title, deckId } = this.props.navigation.state.params;
+    const { cardStore, deckStore } = this.props;
+    const deck = deckStore[deckId];
+    const { cards: cardIds } = deck;
     this.setState({
       title,
-      cards: cards.map(cardId => this.props.cardStore[cardId])
+      cards: cardIds.map(cardId => cardStore[cardId])
     });
   }
 
-  nextView = deck => this.props.navigation.navigate("DeckView", deck);
+  nextView = deck => this.props.navigation.navigate("DeckView");
 
   handleOnChangeText = text => this.setState({ title: text });
 
@@ -48,13 +50,25 @@ class EditDeck extends Component {
     if (trimmedTitle === "") {
       Alert.alert(`Oops! ✋`, `Please give your deck a unique title! 🦄`);
     } else {
+      const { deckId } = this.props.navigation.state.params;
       const deck = {
-        ...this.props.navigation.state.params,
+        ...this.props.deckStore[deckId],
         title: trimmedTitle
       };
 
       // use API to update Deck
       this.props.dispatch(handleUpdateDeck(deck));
+      Alert.alert(
+        `Your changes have been made! ✅`,
+        `Your deck's new title is "${trimmedTitle}"`,
+        [
+          {
+            text: `Done with your edits?`,
+            onPress: () => this.props.navigation.navigate("DeckView")
+          },
+          { text: "Cancel", style: "cancel" }
+        ]
+      );
 
       // go to DeckView
       // this.nextView(deck);
@@ -125,9 +139,10 @@ class EditDeck extends Component {
   }
 }
 
-function mapStateToProps({ cards }) {
+function mapStateToProps({ cards, decks }) {
   return {
-    cardStore: cards.data
+    cardStore: cards.data,
+    deckStore: decks.data
   };
 }
 

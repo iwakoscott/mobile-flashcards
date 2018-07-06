@@ -56,7 +56,7 @@ export default function decks(state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          ...action.deck
+          [action.deck.deckId]: action.deck
         }
       };
     case ADD_DECK_FAIL:

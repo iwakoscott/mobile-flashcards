@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import Deck from "./Deck";
 import Button, { TextButton } from "./Button";
@@ -16,7 +17,6 @@ import Card from "./Card";
 import shuffle from "shuffle-array";
 import { connect } from "react-redux";
 import { handleDeleteDeck } from "../actions/decks";
-import CardFlip from "react-native-card-flip";
 
 const { width, height } = Dimensions.get("window");
 
@@ -34,34 +34,30 @@ const AddCardViewWrapper = styled.View`
 
 class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { title } = navigation.state.params;
     return {
-      title
+      title: "Deck"
     };
   };
 
   state = {
-    shuffle: false,
-    cards: []
+    shuffle: false
   };
 
-  componentDidMount() {
-    const { cards: cardIds } = this.props.navigation.state.params;
-    const { cardStore } = this.props;
-    // cards is an array of cardIds, we need to fetch these ids from the store
-    this.setState({
-      cards: cardIds.map(cardId => cardStore[cardId])
-    });
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.cardStore !== this.props.cardStore) {
+  //     const { deckId } = this.props.navigation.state.params;
+  //     const { cardStore, deckStore } = this.props;
+  //     const deck = deckStore[deckId];
+  //     const { cards: cardIds } = deck;
+  //     this.setState({
+  //       cards: cardIds.map(cardId => cardStore[cardId])
+  //     });
+  //   }
+  // }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.cardStore !== this.props.cardStore) {
-      const { cardStore } = this.props;
-      const { cards } = this.props.navigation.state.params;
-      this.setState({
-        cards: cards.map(cardId => cardStore[cardId])
-      });
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    const { deckId } = this.props.navigation.state.params;
+    return typeof nextProps.deckStore[deckId] !== "undefined";
   }
 
   shuffleCards(cards) {
@@ -69,12 +65,7 @@ class DeckView extends Component {
   }
 
   toggleShuffle = () => {
-    this.setState(({ shuffle, cards }) => ({
-      shuffle: !shuffle,
-      cards: !shuffle
-        ? this.shuffleCards(cards)
-        : cards.sort((a, b) => b.timestamp - a.timestamp)
-    }));
+    this.setState(({ shuffle }) => ({ shuffle: !shuffle }));
   };
 
   onDeleteDeck = deckId => {
@@ -87,12 +78,14 @@ class DeckView extends Component {
   onAddCard = deckId => this.props.navigation.navigate("AddCard", { deckId });
 
   render() {
-    const {
-      title,
-      deckId,
-      cards: cardIds
-    } = this.props.navigation.state.params;
-    const { cards, shuffle } = this.state;
+    const { deckId } = this.props.navigation.state.params;
+    if (typeof this.props.deckStore[deckId] === "undefined") {
+      return <ActivityIndicator />;
+    }
+    const { title, cards: cardIds } = this.props.deckStore[deckId];
+    const cards = cardIds.map(cardId => this.props.cardStore[cardId]);
+    const { shuffle } = this.state;
+    const cardsToDisplay = shuffle ? this.shuffleCards(cards) : cards;
     return (
       <ScrollView>
         <Deck title={title} cards={cards}>
@@ -108,8 +101,8 @@ class DeckView extends Component {
             <Button
               height="50px"
               color="#F79F1F"
-              onPress={() =>
-                this.onEditDeck(this.props.navigation.state.params)
+              onPress={
+                () => this.onEditDeck({ deckId, title }) // {deckId, title}
               }>
               <Entypo name="edit" size={20} color="white" />
             </Button>
@@ -174,7 +167,7 @@ class DeckView extends Component {
           )}
         </AddCardViewWrapper>
         <View style={{ justifyContent: "center" }}>
-          {cards.map((card, index) => (
+          {cardsToDisplay.map((card, index) => (
             <Card key={index} card={card}>
               {({ CardFront, CardBack, CardFlip }) => (
                 <CardFlip ref={card => (this["card" + index] = card)}>
