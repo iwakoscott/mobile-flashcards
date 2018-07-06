@@ -13,7 +13,7 @@ import {
   UPDATE_DECK_FAIL
 } from "../actions/decks";
 
-import { ADD_CARD_SUCCESS } from "../actions/cards";
+import { ADD_CARD_SUCCESS, DELETE_CARD_SUCCESS } from "../actions/cards";
 
 import { decouple } from "../utils/tools";
 
@@ -108,6 +108,14 @@ export default function decks(state = initialState, action) {
             ...state.data[action.deckId],
             cards: [action.card.cardId, ...state.data[action.deckId].cards]
           }
+        }
+      };
+    case DELETE_CARD_SUCCESS:
+      return {
+        ...state,
+        [action.deckId]: {
+          ...state[action.deckId],
+          cards: state[action.deckId].cards.filter(id => id !== action.cardId)
         }
       };
     default:

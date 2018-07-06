@@ -19,6 +19,10 @@ class AddCard extends Component {
     answer: ""
   };
 
+  componentDidMount() {
+    // When component mounts, we want to update the question, answer states which can be passed from prev route
+  }
+
   onSubmit = () => {
     // check to see if question and answers are trimmed and not empty
     const { question, answer } = this.state;

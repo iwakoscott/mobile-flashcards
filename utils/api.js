@@ -197,3 +197,40 @@ export function addCard(card, deckId) {
 export function generateUID() {
   return uuidv1().replace(/-/g, "");
 }
+
+export function deleteCard(cardId, deckId) {
+  // TODOS: delete card from CARD_STORAGE
+  const updateCardStorage = AsyncStorage.getItem(CARDS_STORAGE_KEY).then(
+    results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        CARDS_STORAGE_KEY,
+        JSON.stringify({
+          ...decouple(oldState)(cardId)
+        })
+      );
+    }
+  );
+
+  // TODOS: delete cardId from DECK_STORAGE
+  const updateDeckStorage = AsyncStorage.getItem(DECKS_STORAGE_KEY).then(
+    results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        DECKS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [deckId]: {
+            ...oldState[deckId],
+            cards: oldState[deckId].cards.filter(id => id !== cardId)
+          }
+        })
+      );
+    }
+  );
+
+  return Promise.all([updateCardStorage, updateDeckStorage]).then(() => ({
+    cardId,
+    deckId
+  }));
+}

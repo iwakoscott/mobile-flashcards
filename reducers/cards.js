@@ -4,8 +4,13 @@ import {
   FETCH_CARDS_FAIL,
   ADD_CARD,
   ADD_CARD_SUCCESS,
-  ADD_CARD_FAIL
+  ADD_CARD_FAIL,
+  DELETE_CARD,
+  DELETE_CARD_SUCCESS,
+  DELETE_CARD_FAIL
 } from "../actions/cards";
+
+import { decouple } from "../utils/tools";
 
 const initialState = {
   data: {},
@@ -50,6 +55,20 @@ export default function cards(state = initialState, action) {
         }
       };
     case ADD_CARD_FAIL:
+      return {
+        ...state,
+        error: action.error
+      };
+    case DELETE_CARD:
+      return {
+        ...state,
+        error: null
+      };
+    case DELETE_CARD_SUCCESS:
+      return {
+        ...decouple(state)(action.cardId)
+      };
+    case DELETE_CARD_FAIL:
       return {
         ...state,
         error: action.error

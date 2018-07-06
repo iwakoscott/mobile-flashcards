@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import CardFlip from "react-native-card-flip";
 import styled from "styled-components";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome, Entypo } from "@expo/vector-icons";
 import { HeaderText } from "./Styled";
 
 const viewPortWidth = Dimensions.get("window").width;
@@ -23,14 +23,22 @@ const CardViewWrapper = styled.View`
 const CardFooterViewWrapper = styled.View`
   background-color: ${props => (props.front === true ? `#ff5e57` : `#57b9e3`)};
   padding: 10px;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   border-bottom-left-radius: 20;
   border-bottom-right-radius: 20;
 `;
 
-function CardFront({ children, onPress, question }) {
+function CardFront({
+  children,
+  onPress,
+  question,
+  editable,
+  onEdit,
+  onDelete
+}) {
   return (
     <CardViewWrapper>
       <HeaderText fontsize={20}>Q</HeaderText>
@@ -38,15 +46,27 @@ function CardFront({ children, onPress, question }) {
         {typeof children !== "undefined" ? children : question}
       </HeaderText>
       <CardFooterViewWrapper front>
+        {editable && (
+          <TouchableOpacity onPress={onEdit}>
+            <FontAwesome name="edit" size={30} color="black" />
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity onPress={onPress}>
           <Feather name="rotate-cw" size={30} color="black" />
         </TouchableOpacity>
+
+        {editable && (
+          <TouchableOpacity onPress={onDelete}>
+            <Entypo name="trash" size={30} color="black" />
+          </TouchableOpacity>
+        )}
       </CardFooterViewWrapper>
     </CardViewWrapper>
   );
 }
 
-function CardBack({ children, onPress, answer }) {
+function CardBack({ children, onPress, answer, onEdit, editable, onDelete }) {
   return (
     <CardViewWrapper>
       <HeaderText fontsize={20}>A</HeaderText>
@@ -54,9 +74,21 @@ function CardBack({ children, onPress, answer }) {
         {typeof children !== "undefined" ? children : answer}
       </HeaderText>
       <CardFooterViewWrapper>
+        {editable && (
+          <TouchableOpacity onPress={onEdit}>
+            <FontAwesome name="edit" size={30} color="black" />
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity onPress={onPress}>
           <Feather name="rotate-ccw" size={30} color="black" />
         </TouchableOpacity>
+
+        {editable && (
+          <TouchableOpacity onPress={onDelete}>
+            <Entypo name="trash" size={30} color="black" />
+          </TouchableOpacity>
+        )}
       </CardFooterViewWrapper>
     </CardViewWrapper>
   );

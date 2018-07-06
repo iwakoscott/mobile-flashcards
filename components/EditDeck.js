@@ -59,7 +59,7 @@ class EditDeck extends Component {
       // use API to update Deck
       this.props.dispatch(handleUpdateDeck(deck));
       Alert.alert(
-        `Your changes have been made! ✅`,
+        `Your changes have been saved! ✅`,
         `Your deck's new title is "${trimmedTitle}"`,
         [
           {
@@ -69,12 +69,6 @@ class EditDeck extends Component {
           { text: "Cancel", style: "cancel" }
         ]
       );
-
-      // go to DeckView
-      // this.nextView(deck);
-
-      // reset title
-      // this.setState({ title: "" });
     }
   };
 
@@ -121,10 +115,12 @@ class EditDeck extends Component {
                 {({ CardFront, CardBack, CardFlip }) => (
                   <CardFlip ref={card => (this["card" + index] = card)}>
                     <CardFront
+                      editable
                       question={card.question}
                       onPress={() => this["card" + index].flip()}
                     />
                     <CardBack
+                      editable
                       answer={card.answer}
                       onPress={() => this["card" + index].flip()}
                     />

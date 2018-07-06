@@ -15,6 +15,10 @@ export const StyledTextInput = styled.TextInput`
       border-color: ${props.borderColor};
       border-width: 2px;
       border-radius: 3px;
+      border-style: dashed;
+      shadow-radius: 10px;
+      shadow-opacity: 0.4;
+      shadow-color: rgba(0, 0, 0, 0.43);
     `};
 `;
 

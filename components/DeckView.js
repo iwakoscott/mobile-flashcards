@@ -30,6 +30,7 @@ const SubheaderViewWrapper = styled.View`
 const AddCardViewWrapper = styled.View`
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 `;
 
 class DeckView extends Component {
@@ -42,18 +43,6 @@ class DeckView extends Component {
   state = {
     shuffle: false
   };
-
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.cardStore !== this.props.cardStore) {
-  //     const { deckId } = this.props.navigation.state.params;
-  //     const { cardStore, deckStore } = this.props;
-  //     const deck = deckStore[deckId];
-  //     const { cards: cardIds } = deck;
-  //     this.setState({
-  //       cards: cardIds.map(cardId => cardStore[cardId])
-  //     });
-  //   }
-  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { deckId } = this.props.navigation.state.params;
@@ -128,13 +117,12 @@ class DeckView extends Component {
           </View>
         </Deck>
 
-        <SubheaderViewWrapper>
-          <SubheaderText>Preview</SubheaderText>
-        </SubheaderViewWrapper>
-
         <AddCardViewWrapper>
           {cards.length === 0 ? (
-            <View>
+            <View
+              style={{
+                marginTop: 30
+              }}>
               <Text>Looks like there are no cards in this deck!</Text>
               <TextButton marginTop={20} onPress={() => this.onAddCard(deckId)}>
                 Add a card?
@@ -166,6 +154,13 @@ class DeckView extends Component {
             </View>
           )}
         </AddCardViewWrapper>
+
+        {cards.length === 0 ? null : (
+          <SubheaderViewWrapper>
+            <SubheaderText>Preview</SubheaderText>
+          </SubheaderViewWrapper>
+        )}
+
         <View style={{ justifyContent: "center" }}>
           {cardsToDisplay.map((card, index) => (
             <Card key={index} card={card}>
