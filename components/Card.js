@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import CardFlip from "react-native-card-flip";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Feather, FontAwesome, Entypo } from "@expo/vector-icons";
 import { HeaderText } from "./Styled";
 
@@ -29,6 +29,11 @@ const CardFooterViewWrapper = styled.View`
   width: 100%;
   border-bottom-left-radius: 20;
   border-bottom-right-radius: 20;
+  ${props =>
+    props.editable &&
+    css`
+      background-color: #f79f1f;
+    `};
 `;
 
 function CardFront({
@@ -45,7 +50,7 @@ function CardFront({
       <HeaderText fontSize={25} margin={10}>
         {typeof children !== "undefined" ? children : question}
       </HeaderText>
-      <CardFooterViewWrapper front>
+      <CardFooterViewWrapper front editable={editable}>
         {editable && (
           <TouchableOpacity onPress={onEdit}>
             <FontAwesome name="edit" size={30} color="black" />
@@ -73,7 +78,7 @@ function CardBack({ children, onPress, answer, onEdit, editable, onDelete }) {
       <HeaderText fontSize={25} margin={10}>
         {typeof children !== "undefined" ? children : answer}
       </HeaderText>
-      <CardFooterViewWrapper>
+      <CardFooterViewWrapper editable={editable}>
         {editable && (
           <TouchableOpacity onPress={onEdit}>
             <FontAwesome name="edit" size={30} color="black" />

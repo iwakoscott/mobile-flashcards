@@ -198,16 +198,14 @@ export function generateUID() {
   return uuidv1().replace(/-/g, "");
 }
 
-export function deleteCard(cardId, deckId) {
+export function removeCard(cardId, deckId) {
   // TODOS: delete card from CARD_STORAGE
   const updateCardStorage = AsyncStorage.getItem(CARDS_STORAGE_KEY).then(
     results => {
       const oldState = JSON.parse(results);
       AsyncStorage.setItem(
         CARDS_STORAGE_KEY,
-        JSON.stringify({
-          ...decouple(oldState)(cardId)
-        })
+        JSON.stringify(decouple(oldState)(cardId))
       );
     }
   );

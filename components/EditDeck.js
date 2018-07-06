@@ -13,13 +13,14 @@ import { NewDeck } from "./Deck";
 import { HeaderText, StyledTextInput } from "./Styled";
 import Button from "./Button";
 import { handleUpdateDeck } from "../actions/decks";
+import { handleDeleteCard } from "../actions/cards";
 import Card from "./Card";
 import { Ionicons } from "@expo/vector-icons";
 
 class EditDeck extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: `✏️ Edit Deck`
+      title: `Edit Mode 👷‍♂️`
     };
   };
 
@@ -34,6 +35,23 @@ class EditDeck extends Component {
   nextView = deck => this.props.navigation.navigate("DeckView");
 
   handleOnChangeText = text => this.setState({ title: text });
+
+  onDeleteCard = (cardId, deckId) => {
+    Alert.alert(
+      `Wait! ✋`,
+      `Are you sure you want to delete this card? You cannot undo this action.`,
+      [
+        {
+          text: `Yes, delete this card.`,
+          onPress: () => {
+            debugger;
+            this.props.dispatch(handleDeleteCard(cardId, deckId));
+          }
+        },
+        { text: "Cancel", style: "cancel" }
+      ]
+    );
+  };
 
   handleSubmit = () => {
     const { title: newTitle } = this.state;
@@ -63,6 +81,13 @@ class EditDeck extends Component {
       );
     }
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.cardStore !== this.props.cardStore ||
+      this.state.title !== nextState.title
+    );
+  }
 
   render() {
     const { cardStore, deckStore } = this.props;
@@ -114,11 +139,13 @@ class EditDeck extends Component {
                       editable
                       question={card.question}
                       onPress={() => this["card" + index].flip()}
+                      onDelete={() => this.onDeleteCard(card.cardId, deckId)}
                     />
                     <CardBack
                       editable
                       answer={card.answer}
                       onPress={() => this["card" + index].flip()}
+                      onDelete={() => this.onDeleteCard(card.cardId, deckId)}
                     />
                   </CardFlip>
                 )}

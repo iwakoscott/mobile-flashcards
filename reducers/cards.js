@@ -66,7 +66,10 @@ export default function cards(state = initialState, action) {
       };
     case DELETE_CARD_SUCCESS:
       return {
-        ...decouple(state)(action.cardId)
+        ...state,
+        data: {
+          ...decouple(state.data, action.cardId)
+        }
       };
     case DELETE_CARD_FAIL:
       return {

@@ -1,4 +1,4 @@
-import { fetchCards, addCard, deleteCard } from "../utils/api";
+import { fetchCards, addCard, removeCard } from "../utils/api";
 export const FETCH_CARDS = "FETCH_CARDS";
 export const FETCH_CARDS_SUCCESS = "FETCH_CARDS_SUCCESS";
 export const FETCH_CARDS_FAIL = "FETCH_CARDS_FAIL";
@@ -92,7 +92,7 @@ export function handleAddCard(card, deckId) {
 export function handleDeleteCard(cardId, deckId) {
   return dispatch => {
     dispatch(deletingCard());
-    deleteCard(cardId, deckId)
+    removeCard(cardId, deckId)
       .then(({ cardId, deckId }) => dispatch(deleteCardSuccess(cardId, deckId)))
       .catch(() => dispatch(deleteCardFail(`Error deleting card.`)));
   };

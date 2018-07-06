@@ -113,9 +113,14 @@ export default function decks(state = initialState, action) {
     case DELETE_CARD_SUCCESS:
       return {
         ...state,
-        [action.deckId]: {
-          ...state[action.deckId],
-          cards: state[action.deckId].cards.filter(id => id !== action.cardId)
+        data: {
+          ...state.data,
+          [action.deckId]: {
+            ...state.data[action.deckId],
+            cards: state.data[action.deckId].cards.filter(
+              id => id !== action.cardId
+            )
+          }
         }
       };
     default:
