@@ -43,23 +43,24 @@ class EditDeck extends Component {
 
   handleSubmit = () => {
     const { title: newTitle } = this.state;
+    const trimmedTitle = newTitle.trim();
 
-    if (newTitle === "") {
+    if (trimmedTitle === "") {
       Alert.alert(`Oops! ✋`, `Please give your deck a unique title! 🦄`);
     } else {
       const deck = {
         ...this.props.navigation.state.params,
-        title: newTitle
+        title: trimmedTitle
       };
 
       // use API to update Deck
       this.props.dispatch(handleUpdateDeck(deck));
 
       // go to DeckView
-      this.nextView(deck);
+      // this.nextView(deck);
 
       // reset title
-      this.setState({ title: "" });
+      // this.setState({ title: "" });
     }
   };
 
@@ -81,6 +82,8 @@ class EditDeck extends Component {
                   marginTop: 20
                 }}>
                 <StyledTextInput
+                  backgroundColor="white"
+                  borderColor="#f1f2f6"
                   allowFontScaling
                   onChangeText={this.handleOnChangeText}
                   value={this.state.title}
@@ -88,35 +91,33 @@ class EditDeck extends Component {
                   maxLength={40}
                 />
               </View>
+              <Button
+                onPress={this.handleSubmit}
+                color="#F79F1F"
+                fontSize={20}
+                allRound>
+                Edit Title{" "}
+              </Button>
             </NewDeck>
           </KeyboardAvoidingView>
 
           <View style={{ justifyContent: "center" }}>
             {cards.map((card, index) => (
-              <KeyboardAvoidingView behavior="padding" key={index} enabled>
-                <Card card={card}>
-                  {({ CardFront, CardBack, CardFlip }) => (
-                    <CardFlip ref={card => (this["card" + index] = card)}>
-                      <CardFront
-                        question={card.question}
-                        onPress={() => this["card" + index].flip()}
-                      />
-                      <CardBack
-                        answer={card.answer}
-                        onPress={() => this["card" + index].flip()}
-                      />
-                    </CardFlip>
-                  )}
-                </Card>
-              </KeyboardAvoidingView>
+              <Card card={card} key={index}>
+                {({ CardFront, CardBack, CardFlip }) => (
+                  <CardFlip ref={card => (this["card" + index] = card)}>
+                    <CardFront
+                      question={card.question}
+                      onPress={() => this["card" + index].flip()}
+                    />
+                    <CardBack
+                      answer={card.answer}
+                      onPress={() => this["card" + index].flip()}
+                    />
+                  </CardFlip>
+                )}
+              </Card>
             ))}
-          </View>
-
-          <View style={{ marginTop: 20 }}>
-            <Button onPress={this.handleSubmit} fontSize={20} allRound>
-              Complete Edits{" "}
-              <Ionicons name="ios-checkmark-circle" color="white" size={30} />
-            </Button>
           </View>
         </View>
       </ScrollView>

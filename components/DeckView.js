@@ -196,9 +196,10 @@ class DeckView extends Component {
   }
 }
 
-function mapStateToProps({ cards }) {
+function mapStateToProps({ cards, decks }) {
   return {
-    cardStore: cards.data
+    cardStore: cards.data,
+    deckStore: decks.data
   };
 }
 
