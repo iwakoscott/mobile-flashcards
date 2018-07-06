@@ -24,19 +24,11 @@ class EditDeck extends Component {
   };
 
   state = {
-    title: "",
-    cards: []
+    title: ""
   };
 
   componentDidMount() {
-    const { title, deckId } = this.props.navigation.state.params;
-    const { cardStore, deckStore } = this.props;
-    const deck = deckStore[deckId];
-    const { cards: cardIds } = deck;
-    this.setState({
-      title,
-      cards: cardIds.map(cardId => cardStore[cardId])
-    });
+    this.setState({ title: this.props.navigation.state.params.title });
   }
 
   nextView = deck => this.props.navigation.navigate("DeckView");
@@ -73,7 +65,11 @@ class EditDeck extends Component {
   };
 
   render() {
-    const { cards } = this.state;
+    const { cardStore, deckStore } = this.props;
+    const { deckId } = this.props.navigation.state.params;
+    const { cards } = deckStore[deckId];
+    const cardData = cards.map(cardId => cardStore[cardId]);
+
     return (
       <ScrollView>
         <View
@@ -110,7 +106,7 @@ class EditDeck extends Component {
           </KeyboardAvoidingView>
 
           <View style={{ justifyContent: "center" }}>
-            {cards.map((card, index) => (
+            {cardData.map((card, index) => (
               <Card card={card} key={index}>
                 {({ CardFront, CardBack, CardFlip }) => (
                   <CardFlip ref={card => (this["card" + index] = card)}>
