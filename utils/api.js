@@ -27,14 +27,14 @@ const CARDS_DATA = {
   },
   ac90ac8caa0d4d189bb559e1f19c5bcf: {
     cardId: "ac90ac8caa0d4d189bb559e1f19c5bcf",
-    question: "What is the capital of California?",
-    answer: "Sacramento",
+    question: "What is Paddington's Aunts name?",
+    answer: "Aunt Lucy",
     timestamp: 1525734029409
   },
   "9e615313343949008d33f6242ddc9bcb": {
     cardId: "9e615313343949008d33f6242ddc9bcb",
-    question: "What is Scott's favorite movie series?",
-    answer: "Paddington 🐻",
+    question: "What is Paddington's favorite food?",
+    answer: "Marmalade Sandwiches 🍊",
     timestamp: 1524783629409
   }
 };
@@ -60,7 +60,7 @@ const DECKS_DATA = {
   },
   "27ddaa32993841d0ad3f4ab8e8ece116": {
     deckId: "27ddaa32993841d0ad3f4ab8e8ece116",
-    title: "General",
+    title: "Paddington Trivia",
     timestamp: 1530243358186,
     topScore: 0,
     cards: [

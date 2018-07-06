@@ -31,7 +31,9 @@ class Home extends Component {
       <HomeViewWrapper noCards={noCards}>
         {noCards ? (
           <View>
-            <Text>Looks like you don't have any decks.</Text>
+            <Text style={{ marginBottom: 30 }}>
+              Looks like you don't have any decks.
+            </Text>
             <TextButton
               onPress={() => this.props.navigation.navigate("Add Deck")}>
               Add a Deck?
