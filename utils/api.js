@@ -238,3 +238,18 @@ export function removeCard(cardId, deckId) {
     deckId
   }));
 }
+
+export function updateCard(card) {
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+    .then(results => {
+      const oldState = JSON.parse(results);
+      AsyncStorage.setItem(
+        CARDS_STORAGE_KEY,
+        JSON.stringify({
+          ...oldState,
+          [card.cardId]: card
+        })
+      );
+    })
+    .then(() => card);
+}

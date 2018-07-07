@@ -1,4 +1,4 @@
-import { fetchCards, addCard, removeCard } from "../utils/api";
+import { fetchCards, addCard, removeCard, updateCard } from "../utils/api";
 export const FETCH_CARDS = "FETCH_CARDS";
 export const FETCH_CARDS_SUCCESS = "FETCH_CARDS_SUCCESS";
 export const FETCH_CARDS_FAIL = "FETCH_CARDS_FAIL";
@@ -8,6 +8,9 @@ export const ADD_CARD_FAIL = "ADD_CARD_FAIL";
 export const DELETE_CARD = "DELETE_CARD";
 export const DELETE_CARD_SUCCESS = "DELETE_CARD_SUCCESS";
 export const DELETE_CARD_FAIL = "DELETE_CARD_FAIL";
+export const UPDATE_CARD = "UPDATE_CARD";
+export const UPDATE_CARD_SUCCESS = "UPDATE_CARD_SUCCESS";
+export const UPDATE_CARD_FAIL = "UPDATE_CARD_FAIL";
 
 function fetchingCards() {
   return {
@@ -71,6 +74,26 @@ function deleteCardFail(error) {
   };
 }
 
+function updatingCard() {
+  return {
+    type: UPDATE_CARD
+  };
+}
+
+function updateCardSuccess(card) {
+  return {
+    type: UPDATE_CARD_SUCCESS,
+    card
+  };
+}
+
+function updateCardFail(error) {
+  return {
+    type: UPDATE_CARD_FAIL,
+    error
+  };
+}
+
 export function fetchAndHandleCards() {
   return dispatch => {
     dispatch(fetchingCards());
@@ -95,5 +118,14 @@ export function handleDeleteCard(cardId, deckId) {
     removeCard(cardId, deckId)
       .then(({ cardId, deckId }) => dispatch(deleteCardSuccess(cardId, deckId)))
       .catch(() => dispatch(deleteCardFail(`Error deleting card.`)));
+  };
+}
+
+export function handleUpdateCard(card) {
+  return dispatch => {
+    dispatch(updatingCard());
+    updateCard(card)
+      .then(card => dispatch(updateCardSuccess(card)))
+      .catch(() => dispatch(updateCardFail(`Error updating card.`)));
   };
 }

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Card from "./Card";
 import Button from "./Button";
 import { generateUID } from "../utils/api";
-import { handleAddCard } from "../actions/cards";
+import { handleAddCard, handleUpdateCard } from "../actions/cards";
 
 class EditCard extends Component {
   static navigationOptions = () => {
@@ -29,9 +29,10 @@ class EditCard extends Component {
   onSubmit = () => {
     // check to see if question and answers are trimmed and not empty
     const { question, answer } = this.state;
+    const { card } = this.props.navigation.state.params;
     const questionTrimmed = question.trim();
     const answerTrimmed = answer.trim();
-    const { dispatch, navigation, decks } = this.props;
+    const { dispatch, navigation } = this.props;
 
     if (questionTrimmed === "" || answerTrimmed === "") {
       if (questionTrimmed === "" && answerTrimmed === "") {
@@ -48,18 +49,17 @@ class EditCard extends Component {
         );
       }
     } else {
-      const card = {
-        cardId: generateUID(),
+      const updatedCard = {
+        ...card,
         question: questionTrimmed,
-        answer: answerTrimmed,
-        timestamp: Date.now()
+        answer: answerTrimmed
       };
 
       const { deckId } = navigation.state.params;
 
-      // dispatch(handleAddCard(card, deckId));
+      dispatch(handleUpdateCard(updatedCard));
 
-      navigation.navigate("EditDeck", { deckId });
+      navigation.goBack();
     }
   };
 

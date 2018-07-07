@@ -7,7 +7,10 @@ import {
   ADD_CARD_FAIL,
   DELETE_CARD,
   DELETE_CARD_SUCCESS,
-  DELETE_CARD_FAIL
+  DELETE_CARD_FAIL,
+  UPDATE_CARD,
+  UPDATE_CARD_FAIL,
+  UPDATE_CARD_SUCCESS
 } from "../actions/cards";
 
 import { decouple } from "../utils/tools";
@@ -72,6 +75,24 @@ export default function cards(state = initialState, action) {
         }
       };
     case DELETE_CARD_FAIL:
+      return {
+        ...state,
+        error: action.error
+      };
+    case UPDATE_CARD:
+      return {
+        ...state,
+        error: null
+      };
+    case UPDATE_CARD_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.card.cardId]: action.card
+        }
+      };
+    case UPDATE_CARD_FAIL:
       return {
         ...state,
         error: action.error
