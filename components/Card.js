@@ -129,7 +129,7 @@ function CardBack({
 
 export default class Card extends Component {
   render() {
-    const { index, children } = this.props;
+    const { children } = this.props;
     return (
       <View
         style={{

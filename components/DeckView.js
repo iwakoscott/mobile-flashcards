@@ -66,6 +66,23 @@ class DeckView extends Component {
 
   onAddCard = deckId => this.props.navigation.navigate("AddCard", { deckId });
 
+  onStartQuiz = (deckId, title) =>
+    Alert.alert(
+      `Quiz Instructions!`,
+      `👉 Swipe right if you answered correctly and 👈 swipe left if you answered incorrectly.`,
+      [
+        {
+          text: "Start Quiz!",
+          onPress: () =>
+            this.props.navigation.navigate("Quiz", { deckId, title })
+        },
+        {
+          text: "Cancel",
+          style: "cancel"
+        }
+      ]
+    );
+
   render() {
     const { deckId } = this.props.navigation.state.params;
     if (typeof this.props.deckStore[deckId] === "undefined") {
@@ -84,7 +101,11 @@ class DeckView extends Component {
               justifyContent: "center",
               alignItems: "center"
             }}>
-            <Button height="50px" fontSize="20px" buttonStart>
+            <Button
+              height="50px"
+              fontSize="20px"
+              buttonStart
+              onPress={() => this.onStartQuiz(deckId, title)}>
               Start Quiz!
             </Button>
             <Button
@@ -163,7 +184,7 @@ class DeckView extends Component {
 
         <View style={{ justifyContent: "center" }}>
           {cardsToDisplay.map((card, index) => (
-            <Card key={index} card={card}>
+            <Card key={index}>
               {({ CardFront, CardBack, CardFlip }) => (
                 <CardFlip ref={card => (this["card" + index] = card)}>
                   <CardFront

@@ -5575,6 +5575,12 @@ react-native-card-flip@^1.0.3:
   dependencies:
     prop-types "15.5.10"
 
+react-native-deck-swiper@^1.5.17:
+  version "1.5.17"
+  resolved "https://registry.yarnpkg.com/react-native-deck-swiper/-/react-native-deck-swiper-1.5.17.tgz#edc218360d25b6ee9f09e3a664cca02f43d18ce9"
+  dependencies:
+    prop-types "15.5.10"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
