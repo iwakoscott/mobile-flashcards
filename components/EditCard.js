@@ -88,7 +88,6 @@ class EditCard extends Component {
                       <StyledTextInput
                         backgroundColor="white"
                         borderColor="#f1f2f6"
-                        allowFontScaling
                         maxLength={100}
                         value={question}
                         onChangeText={text =>
@@ -104,7 +103,6 @@ class EditCard extends Component {
                       <StyledTextInput
                         backgroundColor="white"
                         borderColor="#f1f2f6"
-                        allowFontScaling
                         maxLength={100}
                         value={answer}
                         onChangeText={text =>
@@ -122,7 +120,6 @@ class EditCard extends Component {
                       <StyledTextInput
                         backgroundColor="white"
                         borderColor="#f1f2f6"
-                        allowFontScaling
                         maxLength={100}
                         value={question}
                         onChangeText={text =>
@@ -138,7 +135,6 @@ class EditCard extends Component {
                       <StyledTextInput
                         backgroundColor="white"
                         borderColor="#f1f2f6"
-                        allowFontScaling
                         maxLength={100}
                         value={answer}
                         onChangeText={text =>

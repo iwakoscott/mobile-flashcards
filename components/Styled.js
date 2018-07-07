@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
 
 export const StyledTextInput = styled.TextInput`
+  width: 100%;
   font-size: 30px;
-  text-align: center;
   ${props =>
     props.backgroundColor &&
     css`

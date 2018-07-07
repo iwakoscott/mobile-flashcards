@@ -66,6 +66,8 @@ class AddDeck extends Component {
                 marginTop: 20
               }}>
               <StyledTextInput
+                backgroundColor="white"
+                borderColor="#f1f2f6"
                 allowFontScaling
                 onChangeText={this.handleOnChangeText}
                 value={this.state.title}
@@ -73,7 +75,7 @@ class AddDeck extends Component {
                 maxLength={40}
               />
               <Button onPress={this.handleSubmit} allRound>
-                Add Deck
+                Create Deck
               </Button>
             </View>
           </NewDeck>

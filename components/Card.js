@@ -14,8 +14,6 @@ const CardHeaderViewWrapper = styled.View`
 `;
 
 const CardViewWrapper = styled.View`
-  align-items: center;
-  justify-content: space-between;
   background-color: white;
   border-radius: 20;
   padding-top: 20px;
@@ -24,6 +22,7 @@ const CardViewWrapper = styled.View`
   shadow-color: rgba(0, 0, 0, 0.43);
   shadow-offset: 0px 10px;
   min-height: 250px;
+  justify-content: space-between;
 `;
 
 const CardFooterViewWrapper = styled.View`
@@ -53,7 +52,9 @@ function CardFront({
 }) {
   return (
     <CardViewWrapper>
-      <HeaderText fontsize={20}>Q</HeaderText>
+      <HeaderText fontsize={20} centered>
+        Q
+      </HeaderText>
 
       <CardHeaderViewWrapper>
         <HeaderText fontSize={25} margin={10}>
@@ -95,10 +96,14 @@ function CardBack({
 }) {
   return (
     <CardViewWrapper>
-      <HeaderText fontsize={20}>A</HeaderText>
-      <HeaderText fontSize={25} margin={10}>
-        {typeof children !== "undefined" ? children : answer}
+      <HeaderText centered fontsize={20}>
+        A
       </HeaderText>
+      <CardHeaderViewWrapper>
+        <HeaderText fontSize={25} margin={10}>
+          {typeof children !== "undefined" ? children : answer}
+        </HeaderText>
+      </CardHeaderViewWrapper>
       <CardFooterViewWrapper
         editable={editable}
         onEditCardView={onEditCardView}>
