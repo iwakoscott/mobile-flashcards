@@ -12,9 +12,8 @@ import Deck from "./Deck";
 import Button, { TextButton } from "./Button";
 import { SubheaderText } from "./Styled";
 import styled from "styled-components";
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import { Ionicons, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import Card from "./Card";
-import shuffle from "shuffle-array";
 import { connect } from "react-redux";
 import { handleDeleteDeck } from "../actions/decks";
 
@@ -40,22 +39,10 @@ class DeckView extends Component {
     };
   };
 
-  state = {
-    shuffle: false
-  };
-
   shouldComponentUpdate(nextProps, nextState) {
     const { deckId } = this.props.navigation.state.params;
     return typeof nextProps.deckStore[deckId] !== "undefined";
   }
-
-  shuffleCards(cards) {
-    return shuffle(cards, { copy: true });
-  }
-
-  toggleShuffle = () => {
-    this.setState(({ shuffle }) => ({ shuffle: !shuffle }));
-  };
 
   onDeleteDeck = deckId => {
     this.props.dispatch(handleDeleteDeck(deckId));
@@ -90,8 +77,6 @@ class DeckView extends Component {
     }
     const { title, cards: cardIds } = this.props.deckStore[deckId];
     const cards = cardIds.map(cardId => this.props.cardStore[cardId]);
-    const { shuffle } = this.state;
-    const cardsToDisplay = shuffle ? this.shuffleCards(cards) : cards;
     return (
       <ScrollView>
         <Deck title={title} cards={cards}>
@@ -160,16 +145,11 @@ class DeckView extends Component {
                 color="transparent"
                 padding={"10px"}
                 onPress={() => this.onAddCard(deckId)}>
-                <Ionicons name="ios-add" size={50} color="black" />
-              </Button>
-              <Button
-                color="transparent"
-                padding={"10px"}
-                onPress={this.toggleShuffle}>
-                <Ionicons
-                  name="ios-shuffle"
-                  size={50}
-                  color={shuffle ? "#34e7e4" : "black"}
+                <Ionicons name="ios-add" size={30} color="black" />
+                <MaterialCommunityIcons
+                  name="cards-outline"
+                  size={40}
+                  color="black"
                 />
               </Button>
             </View>
@@ -183,7 +163,7 @@ class DeckView extends Component {
         )}
 
         <View style={{ justifyContent: "center" }}>
-          {cardsToDisplay.map((card, index) => (
+          {cards.map((card, index) => (
             <Card key={index}>
               {({ CardFront, CardBack, CardFlip }) => (
                 <CardFlip ref={card => (this["card" + index] = card)}>
