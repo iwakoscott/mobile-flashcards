@@ -50,7 +50,6 @@ const DECKS_DATA = {
     deckId: "e169c6a8bd0f4a8b8c7f1d61f9bdf6d4",
     title: "React",
     timestamp: 1530675271926,
-    topScore: 3,
     cards: [
       "ca0d517f4a684e59b84f99a1dcc47a4c",
       "46a5165e44144b8d88688ada865f5232",
@@ -61,18 +60,22 @@ const DECKS_DATA = {
     deckId: "ac1183d4a5004d82ab3fee8715fbfe06",
     title: "Javascript",
     timestamp: 1525664158186,
-    topScore: 0,
     cards: ["9f37a15769924fc6983f77b0d4de8f53"]
   },
   "27ddaa32993841d0ad3f4ab8e8ece116": {
     deckId: "27ddaa32993841d0ad3f4ab8e8ece116",
     title: "Paddington Trivia",
     timestamp: 1530243358186,
-    topScore: 0,
     cards: [
       "ac90ac8caa0d4d189bb559e1f19c5bcf",
       "9e615313343949008d33f6242ddc9bcb"
     ]
+  },
+  "734a04709ad848119a593dae97f4cbd5": {
+    deckId: "734a04709ad848119a593dae97f4cbd5",
+    title: "Marked for Deletion",
+    timestamp: 1108248107217,
+    cards: []
   }
 };
 
