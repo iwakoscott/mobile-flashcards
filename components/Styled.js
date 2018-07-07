@@ -58,6 +58,13 @@ export const SubheaderText = styled.Text`
     css`
       text-align: center;
     `};
+
+  ${props =>
+    props.underline &&
+    css`
+      text-decoration: underline;
+      text-decoration-color: ${props.color ? props.color : "black"};
+    `};
 `;
 
 export const MutedText = styled.Text`

@@ -124,7 +124,7 @@ class Quiz extends Component {
               Quiz Complete!✨
             </HeaderText>
 
-            <SubheaderText centered color="white" margin="4">
+            <SubheaderText underline centered color="white" margin="4">
               Your score: {`${correct}/${numberOfQuestions}`}
             </SubheaderText>
 
@@ -137,11 +137,19 @@ class Quiz extends Component {
                 justifyContent: "space-evenly",
                 width
               }}>
-              <Button allRound onPress={this.onResetQuiz} fontSize="20px">
+              <Button
+                allRound
+                onPress={this.onResetQuiz}
+                fontSize="20px"
+                color="#78e08f">
                 Reset Quiz
               </Button>
-              <Button fontSize="20px" allRound color="#f1c40f">
-                Home
+              <Button
+                fontSize="20px"
+                allRound
+                color="#f1c40f"
+                onPress={() => this.props.navigation.goBack()}>
+                Back
               </Button>
             </View>
           </View>
