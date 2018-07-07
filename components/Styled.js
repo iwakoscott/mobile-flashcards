@@ -34,10 +34,30 @@ export const HeaderText = styled.Text`
     css`
       margin: ${props.margin}px;
     `};
+  ${props =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `};
 `;
 
 export const SubheaderText = styled.Text`
   font-size: 25px;
+  ${props =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `};
+  ${props =>
+    props.margin &&
+    css`
+      margin: ${props.margin}px;
+    `};
+  ${props =>
+    props.centered &&
+    css`
+      text-align: center;
+    `};
 `;
 
 export const MutedText = styled.Text`

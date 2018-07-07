@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
+import { Text, View, Modal } from "react-native";
 import { connect } from "react-redux";
 import styled, { css } from "styled-components";
 import Card from "./Card";
-import { HeaderText } from "./Styled";
+import { HeaderText, SubheaderText } from "./Styled";
+import Button from "./Button";
 import Swiper from "react-native-deck-swiper";
+import { grader } from "../utils/tools";
 
 const EndZone = styled.View`
   align-items: center;
@@ -30,27 +32,54 @@ class Quiz extends Component {
 
   state = {
     correct: 0,
-    incorrect: 0
+    incorrect: 0,
+    numberOfQuestions: 0,
+    modalOpen: false
   };
 
+  componentDidMount() {
+    const { deckId } = this.props.navigation.state.params;
+    const { cards } = this.props.deckStore[deckId];
+    this.setState({
+      numberOfQuestions: cards.length
+    });
+  }
+
   onSwipedLeft = () =>
-    this.setState(({ incorrect }) => ({ incorrect: incorrect + 1 }));
+    this.setState(({ incorrect }) => ({
+      incorrect: incorrect + 1
+    }));
 
   onSwipedRight = () =>
-    this.setState(({ correct }) => ({ correct: correct + 1 }));
+    this.setState(({ correct }) => ({
+      correct: correct + 1
+    }));
 
-  onSwipedAll = () =>
-    alert(
-      `You answered ${this.state.correct} correct and ${
-        this.state.incorrect
-      } incorrect`
-    );
+  onSwipedAll = () => {
+    this.setState(({ modalOpen }) => ({
+      modalOpen: !modalOpen
+    }));
+  };
+
+  onResetQuiz = () => {
+    const { deckId } = this.props.navigation.state.params;
+
+    // reset card flips if they have been flipped;
+
+    this.setState(({ modalOpen }) => ({
+      modalOpen: !modalOpen,
+      correct: 0,
+      incorrect: 0
+    }));
+    this.props.navigation.navigate("Quiz", { deckId });
+  };
 
   render() {
     const { deckId } = this.props.navigation.state.params;
 
     const { cards: cardIds } = this.props.deckStore[deckId];
     const cards = cardIds.map(cardId => this.props.cardStore[cardId]);
+    const { correct, numberOfQuestions } = this.state;
     return (
       <View
         style={{
@@ -65,6 +94,8 @@ class Quiz extends Component {
           onSwipedLeft={this.onSwipedLeft}
           onSwipedRight={this.onSwipedRight}
           cards={cards}
+          stackSize={cards.length}
+          keyExtractor={({ cardId }) => cardId}
           renderCard={data => (
             <View
               style={{
@@ -75,14 +106,14 @@ class Quiz extends Component {
               }}>
               <Card>
                 {({ CardFront, CardBack, CardFlip }) => (
-                  <CardFlip ref={card => (this["index" + data.index] = card)}>
+                  <CardFlip ref={card => (this["index" + data.cardId] = card)}>
                     <CardFront
                       question={data.question}
-                      onPress={() => this["index" + data.index].flip()}
+                      onPress={() => this["index" + data.cardId].flip()}
                     />
                     <CardBack
                       answer={data.answer}
-                      onPress={() => this["index" + data.index].flip()}
+                      onPress={() => this["index" + data.cardId].flip()}
                     />
                   </CardFlip>
                 )}
@@ -90,6 +121,34 @@ class Quiz extends Component {
             </View>
           )}
         />
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalOpen}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "space-around",
+              alignItems: "center",
+              backgroundColor: "#4FD0E9"
+            }}>
+            <HeaderText centered fontSize="35px" color="white" margin="5">
+              Quiz Complete!✨
+            </HeaderText>
+
+            <SubheaderText centered color="white" margin="4">
+              Your score: {`${correct}/${numberOfQuestions}`}
+            </SubheaderText>
+
+            <HeaderText centered fontSize="25px" color="white" margin="5">
+              {grader(correct, numberOfQuestions)}
+            </HeaderText>
+            <View style={{ flexDirection: "row" }}>
+              <Button onPress={this.onResetQuiz}>Reset Quiz</Button>
+              <Button>Home</Button>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
