@@ -1,27 +1,13 @@
 import React, { Component } from "react";
-import { Text, View, Modal } from "react-native";
+import { View, Modal, Dimensions } from "react-native";
 import { connect } from "react-redux";
-import styled, { css } from "styled-components";
 import Card from "./Card";
 import { HeaderText, SubheaderText } from "./Styled";
 import Button from "./Button";
 import Swiper from "react-native-deck-swiper";
 import { grader } from "../utils/tools";
 
-const EndZone = styled.View`
-  align-items: center;
-  justify-content: center;
-  border-style: dashed;
-  border-width: 2px;
-  border-color: #b2bec3;
-  padding: 10px 20px;
-  ${props =>
-    props.color &&
-    css`
-      background-color: ${props.color};
-    `};
-  height: 75px;
-`;
+const { width } = Dimensions.get("window");
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -62,7 +48,7 @@ class Quiz extends Component {
   };
 
   onResetQuiz = () => {
-    const { deckId } = this.props.navigation.state.params;
+    const { deckId, title } = this.props.navigation.state.params;
 
     // reset card flips if they have been flipped;
 
@@ -71,7 +57,7 @@ class Quiz extends Component {
       correct: 0,
       incorrect: 0
     }));
-    this.props.navigation.navigate("Quiz", { deckId });
+    this.props.navigation.replace("Quiz", { deckId, title });
   };
 
   render() {
@@ -86,10 +72,12 @@ class Quiz extends Component {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          margin: 0
+          margin: 0,
+          width
         }}>
         <Swiper
           verticalSwipe={false}
+          swipeAnimationDuration={100}
           onSwipedAll={this.onSwipedAll}
           onSwipedLeft={this.onSwipedLeft}
           onSwipedRight={this.onSwipedRight}
@@ -143,9 +131,18 @@ class Quiz extends Component {
             <HeaderText centered fontSize="25px" color="white" margin="5">
               {grader(correct, numberOfQuestions)}
             </HeaderText>
-            <View style={{ flexDirection: "row" }}>
-              <Button onPress={this.onResetQuiz}>Reset Quiz</Button>
-              <Button>Home</Button>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                width
+              }}>
+              <Button allRound onPress={this.onResetQuiz} fontSize="20px">
+                Reset Quiz
+              </Button>
+              <Button fontSize="20px" allRound color="#f1c40f">
+                Home
+              </Button>
             </View>
           </View>
         </Modal>
