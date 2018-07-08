@@ -1,10 +1,23 @@
 import { AsyncStorage } from "react-native";
+import { Permissions, Notifications } from "expo";
 import { decouple } from "./tools";
 import uuidv1 from "uuid/v1";
 
-const DECKS_STORAGE_KEY = "DECKS_STORAGE_KEY";
-const CARDS_STORAGE_KEY = "CARDS_STORAGE_KEY";
+const DECKS_STORAGE_KEY = "DECKS_STORAGE_KEY:UDACITY";
+const CARDS_STORAGE_KEY = "CARDS_STORAGE_KEY:UDACITY";
+const NOTIFICATION_KEY = "NOTIFICATION_KEY:UDACITY";
 
+function createNotification() {
+  return {
+    title: `👋 Don't forget to take your daily quiz!`,
+    body: `Remember practice make perfect. Take your daily quiz right now!`,
+    ios: {
+      sound: true
+    }
+  };
+}
+
+// CARDS API
 const CARDS_DATA = {
   ca0d517f4a684e59b84f99a1dcc47a4c: {
     cardId: "ca0d517f4a684e59b84f99a1dcc47a4c",
@@ -255,4 +268,46 @@ export function updateCard(card) {
       );
     })
     .then(() => card);
+}
+
+// NOTIFICATION API
+
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
+}
+
+export function setLocalNotification() {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status }) => {
+            if (status === "granted") {
+              Notifications.cancelAllScheduledNotificationsAsync();
+              // let tomorrow = new Date();
+              // tomorrow.setDate(tomorrow.getDate() + 0);
+              // tomorrow.setHours(16);
+              // tomorrow.setMinutes(34);
+              let tomorrow = new Date();
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              tomorrow.setHours(10);
+              tomorrow.setMinutes(0);
+
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(),
+                {
+                  time: tomorrow,
+                  repeat: "day"
+                }
+              );
+
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+            }
+          })
+          .catch(error => alert(JSON.stringify(error.sourceURL)));
+      }
+    });
 }

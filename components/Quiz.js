@@ -6,6 +6,7 @@ import { HeaderText, SubheaderText } from "./Styled";
 import Button from "./Button";
 import Swiper from "react-native-deck-swiper";
 import { grader } from "../utils/tools";
+import { setLocalNotification, clearLocalNotification } from "../utils/api";
 
 const { width } = Dimensions.get("window");
 
@@ -45,6 +46,7 @@ class Quiz extends Component {
     this.setState(({ modalOpen }) => ({
       modalOpen: !modalOpen
     }));
+    clearLocalNotification().then(setLocalNotification);
   };
 
   onResetQuiz = () => {

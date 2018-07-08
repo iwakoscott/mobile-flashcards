@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyledTextInput } from "./Styled";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, KeyboardAvoidingView } from "react-native";
 import { connect } from "react-redux";
 import Card from "./Card";
 import Button from "./Button";
@@ -69,38 +69,40 @@ class AddCard extends Component {
           justifyContent: "space-evenly",
           alignItems: "center"
         }}>
-        <Card>
-          {({ CardFlip, CardFront, CardBack }) => (
-            <CardFlip ref={card => (this.card = card)}>
-              <CardFront onPress={() => this.card.flip()}>
-                <View>
-                  <StyledTextInput
-                    allowFontScaling
-                    maxLength={100}
-                    value={question}
-                    onChangeText={text =>
-                      this.handleOnChangeText(text, "question")
-                    }
-                    placeholder="Add a question"
-                  />
-                </View>
-              </CardFront>
-              <CardBack onPress={() => this.card.flip()}>
-                <View>
-                  <StyledTextInput
-                    allowFontScaling
-                    maxLength={100}
-                    value={answer}
-                    onChangeText={text =>
-                      this.handleOnChangeText(text, "answer")
-                    }
-                    placeholder="Add an answer"
-                  />
-                </View>
-              </CardBack>
-            </CardFlip>
-          )}
-        </Card>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <Card>
+            {({ CardFlip, CardFront, CardBack }) => (
+              <CardFlip ref={card => (this.card = card)}>
+                <CardFront onPress={() => this.card.flip()}>
+                  <View>
+                    <StyledTextInput
+                      allowFontScaling
+                      maxLength={100}
+                      value={question}
+                      onChangeText={text =>
+                        this.handleOnChangeText(text, "question")
+                      }
+                      placeholder="Add a question"
+                    />
+                  </View>
+                </CardFront>
+                <CardBack onPress={() => this.card.flip()}>
+                  <View>
+                    <StyledTextInput
+                      allowFontScaling
+                      maxLength={100}
+                      value={answer}
+                      onChangeText={text =>
+                        this.handleOnChangeText(text, "answer")
+                      }
+                      placeholder="Add an answer"
+                    />
+                  </View>
+                </CardBack>
+              </CardFlip>
+            )}
+          </Card>
+        </KeyboardAvoidingView>
         <View
           style={{
             flexDirection: "row",

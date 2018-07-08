@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StatusBar, AsyncStorage } from "react-native";
 import { SimpleLineIcons, MaterialIcons } from "@expo/vector-icons";
 import {
   createBottomTabNavigator,
@@ -16,6 +16,16 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reducers from "./reducers";
+import { Constants } from "expo";
+import { setLocalNotification, clearLocalNotification } from "./utils/api";
+
+function StyledStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
+}
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -93,10 +103,14 @@ const MainNavigator = createStackNavigator({
 });
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>
         <View style={{ flex: 1 }}>
+          <StyledStatusBar barStyle="light-content" backgroundColor="#57b9e3" />
           <MainNavigator />;
         </View>
       </Provider>
