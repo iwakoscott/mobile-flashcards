@@ -43,3 +43,8 @@ Go back to your terminal and copy the url located immediately underneath the QR 
 Paste the URL into the dialogue open in the simulator and then click “Open” and the application should start! ✨
 
 ![Step 6](https://firebasestorage.googleapis.com/v0/b/github-battle-56499.appspot.com/o/Simulator%20Screen%20Shot%20-%20iPhone%207%20-%202018-07-02%20at%2019.47.15.png?alt=media&token=74c84a65-d155-406a-b110-bbdb6b69379e)
+
+#### Shout out to these two libraries that helped me do some really cool animations!
+
+1.  [react-native-deck-swiper](https://github.com/alexbrillant/react-native-deck-swiper)
+2.  [react-native-card-flip](https://github.com/lhandel/react-native-card-flip#readme)

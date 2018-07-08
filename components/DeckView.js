@@ -53,22 +53,40 @@ class DeckView extends Component {
 
   onAddCard = deckId => this.props.navigation.navigate("AddCard", { deckId });
 
-  onStartQuiz = (deckId, title) =>
-    Alert.alert(
-      `Quiz Instructions!`,
-      `👉 Swipe right if you answered correctly and 👈 swipe left if you answered incorrectly.`,
-      [
-        {
-          text: "Start Quiz!",
-          onPress: () =>
-            this.props.navigation.navigate("Quiz", { deckId, title })
-        },
-        {
-          text: "Cancel",
-          style: "cancel"
-        }
-      ]
-    );
+  onStartQuiz = (deckId, title, numberOfCards) => {
+    if (numberOfCards === 0) {
+      Alert.alert(
+        `✋ Oops!`,
+        `Looks like you don't have any cards in this deck!`,
+        [
+          {
+            text: "Add a card",
+            onPress: () => this.props.navigation.navigate("AddCard", { deckId })
+          },
+          {
+            text: "Cancel",
+            style: "cancel"
+          }
+        ]
+      );
+    } else {
+      Alert.alert(
+        `Quiz Instructions!`,
+        `👉 Swipe right if you answered correctly and 👈 swipe left if you answered incorrectly.`,
+        [
+          {
+            text: "Start Quiz!",
+            onPress: () =>
+              this.props.navigation.navigate("Quiz", { deckId, title })
+          },
+          {
+            text: "Cancel",
+            style: "cancel"
+          }
+        ]
+      );
+    }
+  };
 
   render() {
     const { deckId } = this.props.navigation.state.params;
@@ -90,7 +108,7 @@ class DeckView extends Component {
               height="50px"
               fontSize="20px"
               buttonStart
-              onPress={() => this.onStartQuiz(deckId, title)}>
+              onPress={() => this.onStartQuiz(deckId, title, cards.length)}>
               Start Quiz!
             </Button>
             <Button

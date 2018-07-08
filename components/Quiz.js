@@ -21,6 +21,7 @@ class Quiz extends Component {
     correct: 0,
     incorrect: 0,
     numberOfQuestions: 0,
+    cardsLeft: 0,
     modalOpen: false
   };
 
@@ -28,18 +29,21 @@ class Quiz extends Component {
     const { deckId } = this.props.navigation.state.params;
     const { cards } = this.props.deckStore[deckId];
     this.setState({
-      numberOfQuestions: cards.length
+      numberOfQuestions: cards.length,
+      cardsLeft: cards.length
     });
   }
 
   onSwipedLeft = () =>
-    this.setState(({ incorrect }) => ({
-      incorrect: incorrect + 1
+    this.setState(({ incorrect, cardsLeft }) => ({
+      incorrect: incorrect + 1,
+      cardsLeft: cardsLeft - 1
     }));
 
   onSwipedRight = () =>
-    this.setState(({ correct }) => ({
-      correct: correct + 1
+    this.setState(({ correct, cardsLeft }) => ({
+      correct: correct + 1,
+      cardsLeft: cardsLeft - 1
     }));
 
   onSwipedAll = () => {
@@ -67,50 +71,62 @@ class Quiz extends Component {
 
     const { cards: cardIds } = this.props.deckStore[deckId];
     const cards = cardIds.map(cardId => this.props.cardStore[cardId]);
-    const { correct, numberOfQuestions } = this.state;
+    const { correct, numberOfQuestions, cardsLeft } = this.state;
     return (
       <View
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
           margin: 0,
-          width
+          width,
+          backgroundColor: "#4FD0E9"
         }}>
-        <Swiper
-          verticalSwipe={false}
-          swipeAnimationDuration={100}
-          onSwipedAll={this.onSwipedAll}
-          onSwipedLeft={this.onSwipedLeft}
-          onSwipedRight={this.onSwipedRight}
-          cards={cards}
-          stackSize={cards.length}
-          keyExtractor={({ cardId }) => cardId}
-          renderCard={data => (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 100
-              }}>
-              <Card>
-                {({ CardFront, CardBack, CardFlip }) => (
-                  <CardFlip ref={card => (this["index" + data.cardId] = card)}>
-                    <CardFront
-                      question={data.question}
-                      onPress={() => this["index" + data.cardId].flip()}
-                    />
-                    <CardBack
-                      answer={data.answer}
-                      onPress={() => this["index" + data.cardId].flip()}
-                    />
-                  </CardFlip>
-                )}
-              </Card>
-            </View>
-          )}
-        />
+        <View style={{ padding: 10 }}>
+          <HeaderText centered fontSize="25px">
+            Cards Left: {cardsLeft}
+          </HeaderText>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+          <Swiper
+            verticalSwipe={false}
+            swipeAnimationDuration={50}
+            onSwipedAll={this.onSwipedAll}
+            onSwipedLeft={this.onSwipedLeft}
+            onSwipedRight={this.onSwipedRight}
+            cards={cards}
+            stackSize={cards.length}
+            keyExtractor={({ cardId }) => cardId}
+            renderCard={data => (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 200
+                }}>
+                <Card>
+                  {({ CardFront, CardBack, CardFlip }) => (
+                    <CardFlip
+                      ref={card => (this["index" + data.cardId] = card)}>
+                      <CardFront
+                        question={data.question}
+                        onPress={() => this["index" + data.cardId].flip()}
+                      />
+                      <CardBack
+                        answer={data.answer}
+                        onPress={() => this["index" + data.cardId].flip()}
+                      />
+                    </CardFlip>
+                  )}
+                </Card>
+              </View>
+            )}
+          />
+        </View>
         <Modal
           animationType="slide"
           transparent={false}
